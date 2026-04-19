@@ -1,5 +1,5 @@
 from .base import Interactable
-from old_path import PathFinding
+from pathfinding import PathFinding
 
 """
 Ce fichier contient la classe Portal, pour les portails de téléportation.
