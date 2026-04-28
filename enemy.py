@@ -24,6 +24,7 @@ class Enemy(pg.sprite.Sprite):
         return img
     
     def move(self):
+        dt = self.game.dt
         start = s.world_to_grid(self.feet.center, s.TILE_SIZE)
         goal = s.world_to_grid(self.game.player.feet.center, s.TILE_SIZE)
         path = self.game.pathfinding.find_path(start, goal)
@@ -44,7 +45,7 @@ class Enemy(pg.sprite.Sprite):
             return
        
         move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
-        self.xy += move_vec * s.ENEMY_SPEED
+        self.xy += move_vec * s.ENEMY_SPEED * dt
 
     def ray_cast_player(self):
         player_pos = self.game.player.xy

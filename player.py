@@ -28,6 +28,7 @@ class Player(pg.sprite.Sprite):
 
     def move(self):
         keys = pg.key.get_pressed()
+        dt = self.game.dt
 
         # reset accel
         self.acc = pg.Vector2(0, 0)
@@ -41,38 +42,38 @@ class Player(pg.sprite.Sprite):
             self.acc -= direction * s.ACC_STRENGTH
 
         if keys[pg.K_LEFT]:
-            self.angle -= s.ROT_SPEED
+            self.angle -= s.ROT_SPEED * dt
         if keys[pg.K_RIGHT]:
-            self.angle += s.ROT_SPEED
+            self.angle += s.ROT_SPEED * dt
 
         # ==== FRICTION ====
         self.acc += self.vel * s.FRICTION
 
         # ==== PHYSIQUE ====
-        self.vel += self.acc
+        self.vel += self.acc * dt
 
         # limite vitesse
         if self.vel.length() > s.SPEED:
             self.vel.scale_to_length(s.SPEED)
 
-        self.check_walls()
+        self.check_walls(dt)
 
         self.angle %= math.tau
 
-    def check_walls(self):
+    def check_walls(self, dt):
         walls = self.game.world_graph.get_walls()
         # Pour X
-        self.xy.x += self.vel.x
+        self.xy.x += self.vel.x * dt
         self.update()
         if self.feet.collidelist(walls) != -1:
-            self.xy.x -= self.vel.x
+            self.xy.x -= self.vel.x * dt
             self.vel.x = 0
     
         # Pour Y
-        self.xy.y += self.vel.y
+        self.xy.y += self.vel.y * dt
         self.update()
         if self.feet.collidelist(walls) != -1:
-            self.xy.y -= self.vel.y
+            self.xy.y -= self.vel.y * dt
             self.vel.y = 0
 
     def load_image(self, path):

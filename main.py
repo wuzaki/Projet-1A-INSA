@@ -52,8 +52,7 @@ class Game:
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         return False
-            clock.tick(s.FPS)
-            self.dt = clock.get_time() / 1000  # Convert ms to seconds
+            self.dt = clock.tick(s.FPS) / 1000  # Convert ms to seconds
 
 
 # ==== Main ====
