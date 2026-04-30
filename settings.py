@@ -4,7 +4,7 @@ pg.init()
 
 # ==== App Settings ====
 WIDTH, HEIGHT = pg.display.Info().current_w, pg.display.Info().current_h
-FPS = 120
+FPS = 60
 
 # ==== Player Settings ====
 SPEED = 860

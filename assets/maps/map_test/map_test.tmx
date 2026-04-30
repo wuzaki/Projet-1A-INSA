@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="46">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="71">
  <tileset firstgid="1" source="nature.tsx"/>
  <layer id="1" name="floor" width="25" height="25">
   <data encoding="csv">
@@ -86,5 +86,80 @@
   <object id="25" type="collision" x="0" y="32" width="32" height="768"/>
   <object id="26" type="collision" x="768" y="32" width="32" height="768"/>
   <object id="27" type="collision" x="32" y="768" width="736" height="32"/>
+  <object id="46" name="1" type="enemy" x="513.961" y="291.574">
+   <point/>
+  </object>
+  <object id="47" name="1" type="enemy" x="487.275" y="327.156">
+   <point/>
+  </object>
+  <object id="48" name="1" type="enemy" x="498.147" y="370.645">
+   <point/>
+  </object>
+  <object id="49" name="1" type="enemy" x="549.543" y="350.877">
+   <point/>
+  </object>
+  <object id="50" name="1" type="enemy" x="549.543" y="337.04">
+   <point/>
+  </object>
+  <object id="51" name="1" type="enemy" x="555.473" y="301.458">
+   <point/>
+  </object>
+  <object id="52" name="1" type="enemy" x="556.462" y="261.922">
+   <point/>
+  </object>
+  <object id="53" name="1" type="enemy" x="542.624" y="224.364">
+   <point/>
+  </object>
+  <object id="54" name="1" type="enemy" x="517.915" y="182.851">
+   <point/>
+  </object>
+  <object id="55" name="1" type="enemy" x="493.205" y="169.014">
+   <point/>
+  </object>
+  <object id="56" name="1" type="enemy" x="450.704" y="165.061">
+   <point/>
+  </object>
+  <object id="57" name="1" type="enemy" x="508.031" y="220.41">
+   <point/>
+  </object>
+  <object id="58" name="1" type="enemy" x="485.298" y="235.236">
+   <point/>
+  </object>
+  <object id="59" name="1" type="enemy" x="481.344" y="324.191">
+   <point/>
+  </object>
+  <object id="60" name="1" type="enemy" x="519.891" y="353.842">
+   <point/>
+  </object>
+  <object id="61" name="1" type="enemy" x="512.973" y="379.54">
+   <point/>
+  </object>
+  <object id="62" name="1" type="enemy" x="481.344" y="398.32">
+   <point/>
+  </object>
+  <object id="63" name="1" type="enemy" x="504.077" y="429.948">
+   <point/>
+  </object>
+  <object id="64" name="1" type="enemy" x="505.065" y="431.925">
+   <point/>
+  </object>
+  <object id="65" name="1" type="enemy" x="539.659" y="501.112">
+   <point/>
+  </object>
+  <object id="66" name="1" type="enemy" x="563.38" y="496.17">
+   <point/>
+  </object>
+  <object id="67" name="1" type="enemy" x="600.939" y="457.623">
+   <point/>
+  </object>
+  <object id="68" name="1" type="enemy" x="591.055" y="379.54">
+   <point/>
+  </object>
+  <object id="69" name="1" type="enemy" x="633.556" y="381.517">
+   <point/>
+  </object>
+  <object id="70" name="1" type="enemy" x="602.916" y="361.749">
+   <point/>
+  </object>
  </objectgroup>
 </map>

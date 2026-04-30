@@ -17,7 +17,7 @@ class Enemy(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
         self.angle = 0
-        self.has_seen_player = False
+        self.has_seen_player = True
 
     def load_image(self, path):
         img = pg.image.load(path).convert_alpha().subsurface((0,0,32,32))
@@ -67,6 +67,6 @@ class Enemy(pg.sprite.Sprite):
         return True
 
     def update(self):
-        self.has_seen_player = self.ray_cast_player()
+        # self.has_seen_player = self.ray_cast_player()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom

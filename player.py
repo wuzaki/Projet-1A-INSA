@@ -25,8 +25,45 @@ class Player(pg.sprite.Sprite):
         self.image = self.load_image("assets/player.png")
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
-
+        
     def move(self):
+        keys = pg.key.get_pressed()
+        dt = self.game.dt
+
+        ACCEL = 1800
+        FRICTION = 6.5
+        MAX_SPEED = 250
+
+        direction = pg.Vector2(0, 0)
+
+        if keys[pg.K_z]:
+            direction.y -= 1
+        if keys[pg.K_s]:
+            direction.y += 1
+        if keys[pg.K_q]:
+            direction.x -= 1
+        if keys[pg.K_d]:
+            direction.x += 1
+
+        # évite boost diagonale
+        if direction.length_squared() > 0:
+            direction = direction.normalize()
+            self.vel += direction * ACCEL * dt
+
+        # friction progressive
+        self.vel -= self.vel * FRICTION * dt
+
+        # limite vitesse max
+        if self.vel.length() > MAX_SPEED:
+            self.vel.scale_to_length(MAX_SPEED)
+
+        # stop micro-glissement
+        if self.vel.length_squared() < 4:
+            self.vel.xy = (0, 0)
+
+        self.check_walls(dt)
+
+    def old_move(self):
         keys = pg.key.get_pressed()
         dt = self.game.dt
 
@@ -83,5 +120,6 @@ class Player(pg.sprite.Sprite):
         return img
 
     def update(self):
+        # self.move()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom
