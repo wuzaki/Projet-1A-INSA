@@ -5,7 +5,6 @@ import math
 
 """
 Ce fichier contient la classe Player pour la gestion du personnage du joueur.
-By Luc ALLEBEE
 """
 
 # ==== Player ====

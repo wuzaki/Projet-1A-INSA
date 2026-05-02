@@ -10,7 +10,6 @@ from enemy import Enemy
 
 """
 Ce fichier contient la classe WorldGraph, pour la gestion des maps et de leurs objets.
-By Luc ALLEBEE
 """
 
 # ==== Map ====

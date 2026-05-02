@@ -4,7 +4,6 @@ import pygame as pg
 
 """
 Ce fichier contient la classe Ammo, pour les munitions.
-By Luc ALLEBEE
 """
 
 # ==== Ammo ====

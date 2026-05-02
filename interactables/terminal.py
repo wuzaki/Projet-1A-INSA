@@ -6,7 +6,6 @@ import sys
 
 """
 Ce fichier contient la classe Terminal, pour les terminaux d'information.
-By Luc ALLEBEE
 """
 
 # ==== Terminal ====

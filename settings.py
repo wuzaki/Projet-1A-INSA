@@ -3,7 +3,7 @@ import pygame as pg
 pg.init()
 
 # ==== App Settings ====
-WIDTH, HEIGHT = pg.display.Info().current_w, pg.display.Info().current_h
+WIDTH, HEIGHT = 1280, 680 # pg.display.Info().current_w, pg.display.Info().current_h
 FPS = 60
 
 # ==== Player Settings ====
@@ -24,10 +24,10 @@ TEXT_COLOR = (0, 255, 0)
 HIGHLIGHT_COLOR = (0, 100, 0)
 
 # ==== Enemy Settings ====
-ENEMY_SPEED = 68        # pixels/seconde
-ENEMY_MIN_DIST = 100    # pixels
-ENEMY_MAX_DIST = 400    # pixels
-ENEMY_DELAY_DETECTION = 1.0   # secondes
+ENEMY_SPEED = 68 # pixels/seconde
+ENEMY_MIN_DIST = 100 # pixels
+ENEMY_MAX_DIST = 400 # pixels
+ENEMY_DELAY_DETECTION = 1.0 # secondes
 
 def world_to_grid(pos, tile_size):
     return int(pos[0] // tile_size), int(pos[1] // tile_size)

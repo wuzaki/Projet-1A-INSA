@@ -3,7 +3,6 @@ from pathfinding import PathFinding
 
 """
 Ce fichier contient la classe Portal, pour les portails de téléportation.
-By Luc ALLEBEE
 """
 
 # ==== Portal ====

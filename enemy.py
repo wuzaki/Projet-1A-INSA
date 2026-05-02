@@ -4,7 +4,6 @@ import math
 
 """
 Ce fichier contient la classe Enemy pour la gestion des ennemis.
-By Luc ALLEBEE
 """
 
 # ==== Enemy ====

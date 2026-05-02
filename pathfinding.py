@@ -1,5 +1,10 @@
 import heapq
 
+"""
+Ce fichier contient la classe PathFinding, pour la gestion du pathfinding de l'ennemi.
+"""
+
+# ==== PathFinding ====
 class PathFinding:
     def __init__(self, grid):
         self.grid = grid

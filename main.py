@@ -8,7 +8,6 @@ from pathfinding import PathFinding
 
 """
 Ce fichier contient la classe Game pour la gestion principale du jeu.
-By Luc ALLEBEE
 """
 
 # ==== Game ====
