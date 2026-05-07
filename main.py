@@ -7,7 +7,7 @@ from player import Player
 from pathfinding import PathFinding
 
 """
-Ce fichier contient la classe Game pour la gestion principale du jeu.
+Ce fichier contient la classe Game pour la gestion principale du jeu
 """
 
 # ==== Game ====

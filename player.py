@@ -18,6 +18,7 @@ class Player(pg.sprite.Sprite):
         self.xy = pg.math.Vector2(x, y)
         self.vel = pg.math.Vector2(0, 0)
         self.acc = pg.math.Vector2(0, 0)
+        self.rel = 0
         self.angle = 0
 
         # ==== Sprite ====
@@ -61,6 +62,8 @@ class Player(pg.sprite.Sprite):
             self.vel.xy = (0, 0)
 
         self.check_walls(dt)
+
+        self.angle %= math.tau
 
     def old_move(self):
         keys = pg.key.get_pressed()
@@ -112,6 +115,14 @@ class Player(pg.sprite.Sprite):
             self.xy.y -= self.vel.y * dt
             self.vel.y = 0
 
+    def mouse_control(self):
+        mx, my = pg.mouse.get_pos()
+        if mx < s.MOUSE_BORDER_LEFT or mx > s.MOUSE_BORDER_RIGHT:
+            pg.mouse.set_pos([s.WIDTH//2, s.HEIGHT//2])
+        self.rel = pg.mouse.get_rel()[0]
+        self.rel = max(-s.MOUSE_MAX_REL, min(s.MOUSE_MAX_REL, self.rel))
+        self.angle += self.rel * s.MOUSE_SENSITIVITY * self.game.dt
+
     def load_image(self, path):
         sprite_sheet = pg.image.load(path).convert_alpha()
         img = sprite_sheet.subsurface((0, 0, 32, 32))
@@ -120,5 +131,6 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         # self.move()
+        self.mouse_control()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom

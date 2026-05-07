@@ -92,9 +92,6 @@
   <object id="47" name="1" type="enemy" x="487.275" y="327.156">
    <point/>
   </object>
-  <object id="48" name="1" type="enemy" x="498.147" y="370.645">
-   <point/>
-  </object>
   <object id="49" name="1" type="enemy" x="549.543" y="350.877">
    <point/>
   </object>
@@ -129,36 +126,6 @@
    <point/>
   </object>
   <object id="60" name="1" type="enemy" x="519.891" y="353.842">
-   <point/>
-  </object>
-  <object id="61" name="1" type="enemy" x="512.973" y="379.54">
-   <point/>
-  </object>
-  <object id="62" name="1" type="enemy" x="481.344" y="398.32">
-   <point/>
-  </object>
-  <object id="63" name="1" type="enemy" x="504.077" y="429.948">
-   <point/>
-  </object>
-  <object id="64" name="1" type="enemy" x="505.065" y="431.925">
-   <point/>
-  </object>
-  <object id="65" name="1" type="enemy" x="539.659" y="501.112">
-   <point/>
-  </object>
-  <object id="66" name="1" type="enemy" x="563.38" y="496.17">
-   <point/>
-  </object>
-  <object id="67" name="1" type="enemy" x="600.939" y="457.623">
-   <point/>
-  </object>
-  <object id="68" name="1" type="enemy" x="591.055" y="379.54">
-   <point/>
-  </object>
-  <object id="69" name="1" type="enemy" x="633.556" y="381.517">
-   <point/>
-  </object>
-  <object id="70" name="1" type="enemy" x="602.916" y="361.749">
    <point/>
   </object>
  </objectgroup>
