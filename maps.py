@@ -99,7 +99,7 @@ class WorldGraph:
 
     def process(self):
         self.get_group().update()
-        [enemy.move() for enemy in self.get_enemies()] # if enemy.has_seen_player]
+        # [enemy.move() for enemy in self.get_enemies()] # if enemy.has_seen_player]
 
     def draw(self, screen):
         group = self.get_group()
