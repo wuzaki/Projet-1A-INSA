@@ -1,5 +1,4 @@
 import heapq
-# ===========================================================================
 
 """
 Ce fichier contient la classe PathFinding, pour la gestion du pathfinding.
@@ -13,11 +12,10 @@ class PathFinding:
         self.cols = len(grid[0])
 
         # Précalcul des voisins pour chaque cellule (la grille est statique)
-        self._neighbors_cache: dict[tuple, list] = {}
-        self._precompute_neighbors()
+        self.neighbors_cache: dict[tuple, list] = {}
+        self.precompute_neighbors()
 
-    # ------------------------------------------------------------------
-    def _precompute_neighbors(self):
+    def precompute_neighbors(self):
         """Calcule une fois pour toutes les voisins de chaque cellule libre."""
         directions = [
             (-1, 0, 1.0), (1, 0, 1.0), (0, -1, 1.0), (0, 1, 1.0),
@@ -30,7 +28,7 @@ class PathFinding:
         for y in range(rows):
             for x in range(cols):
                 if grid[y][x] != 0:
-                    continue                     # cellule mur → pas de voisins
+                    continue # cellule mur → pas de voisins
                 neighbors = []
                 for dx, dy, cost in directions:
                     nx, ny = x + dx, y + dy
@@ -38,20 +36,18 @@ class PathFinding:
                         continue
                     if grid[ny][nx] != 0:
                         continue
-                    if dx != 0 and dy != 0:     # diagonale : pas de coin coupé
+                    if dx != 0 and dy != 0: # diagonale : pas de coin coupé
                         if grid[y][nx] != 0 or grid[ny][x] != 0:
                             continue
                     neighbors.append((nx, ny, cost))
-                self._neighbors_cache[(x, y)] = neighbors
+                self.neighbors_cache[(x, y)] = neighbors
 
-    # ------------------------------------------------------------------
     @staticmethod
     def heuristic(a, b):
         dx = abs(a[0] - b[0])
         dy = abs(a[1] - b[1])
         return max(dx, dy) + 0.414 * min(dx, dy)   # Chebyshev octile
 
-    # ------------------------------------------------------------------
     def find_path(self, start, goal):
         # Validations rapides
         if not (0 <= goal[0] < self.cols and 0 <= goal[1] < self.rows):
@@ -61,16 +57,16 @@ class PathFinding:
         if start == goal:
             return []
 
-        neighbors_cache = self._neighbors_cache
-        heuristic       = self.heuristic
+        neighbors_cache = self.neighbors_cache
+        heuristic = self.heuristic
 
         open_set  = [(heuristic(start, goal), 0.0, start)]
         came_from = {start: None}
-        g_score   = {start: 0.0}
-        closed    = set()
+        g_score = {start: 0.0}
+        closed = set()
 
         max_iterations = 2000
-        iterations     = 0
+        iterations = 0
 
         while open_set:
             iterations += 1
@@ -91,19 +87,18 @@ class PathFinding:
                 continue
 
             for nx, ny, cost in neighbors_cache.get(current, ()):
-                neighbor       = (nx, ny)
-                tentative_g    = g_score[current] + cost
+                neighbor = (nx, ny)
+                tentative_g = g_score[current] + cost
                 if tentative_g < g_score.get(neighbor, float('inf')):
                     g_score[neighbor]   = tentative_g
                     came_from[neighbor] = current
                     f = tentative_g + heuristic(neighbor, goal)
                     heapq.heappush(open_set, (f, tentative_g, neighbor))
 
-        return self._reconstruct_path(came_from, start, goal)
+        return self.reconstruct_path(came_from, start, goal)
 
-    # ------------------------------------------------------------------
     @staticmethod
-    def _reconstruct_path(came_from, start, goal):
+    def reconstruct_path(came_from, start, goal):
         if goal not in came_from:
             return []
         path    = []

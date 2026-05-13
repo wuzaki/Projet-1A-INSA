@@ -8,7 +8,7 @@ WIDTH, HEIGHT = pg.display.Info().current_w, pg.display.Info().current_h
 FPS = 60
 
 # ==== Player Settings ====
-ACCEL = 1800
+ACCEL = 1600
 FRICTION = 5.5
 MAX_SPEED = 250
 
@@ -30,7 +30,7 @@ TEXT_COLOR = (0, 255, 0)
 HIGHLIGHT_COLOR = (0, 100, 0)
 
 # ==== Enemy Settings ====
-ENEMY_SPEED = 68 # pixels/seconde
+ENEMY_SPEED = 680 # pixels/seconde
 ENEMY_MIN_DIST = 100 # pixels
 ENEMY_MAX_DIST = 400 # pixels
 ENEMY_DELAY_DETECTION = 1.0 # secondes

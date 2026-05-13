@@ -84,7 +84,6 @@ class Player(pg.sprite.Sprite):
         return img
 
     def sync_rects(self):
-        # Arrondi explicite pour éviter le jitter d'arrondi aléatoire
         self.rect.midbottom = self.xy.x, self.xy.y
         self.feet.midbottom = self.rect.midbottom
 
