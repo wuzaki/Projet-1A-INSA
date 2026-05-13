@@ -71,7 +71,7 @@ class WorldGraph:
         group.add(self.player)
 
         self.maps[name] = Map(name, tmx_data, group, walls, interactables, enemies)
-        self.tile_maps[name] = self.generate_tile_map(tmx_data, tmx_data.width * tmx_data.tilewidth, tmx_data.height * tmx_data.tileheight, s.TILE_SIZE)
+        self.tile_maps[name] = self.generate_tile_map(tmx_data, tmx_data.width * tmx_data.tilewidth, tmx_data.height * tmx_data.tileheight)
 
     def add_interactable_collision(self, walls, interactables):
         [walls.append(interactable.get_rect_collision()) for interactable in interactables if interactable.collision]
@@ -121,18 +121,18 @@ class WorldGraph:
 
         # pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
 
-    def generate_tile_map(self, tmx_data, width, height, tile_size):
-        cols = width // tile_size
-        rows = height // tile_size
+    def generate_tile_map(self, tmx_data, width, height):
+        cols = width // s.TILE_SIZE
+        rows = height // s.TILE_SIZE
         grid = [[0 for _ in range(cols)] for _ in range(rows)]
 
         # Marquer les murs
         for obj in tmx_data.objects:
             if obj.type == "collision":
-                start_x = int(obj.x // tile_size)
-                start_y = int(obj.y // tile_size)
-                end_x = int((obj.x + obj.width - 1) // tile_size)
-                end_y = int((obj.y + obj.height - 1) // tile_size)
+                start_x = int(obj.x // s.TILE_SIZE)
+                start_y = int(obj.y // s.TILE_SIZE)
+                end_x = int((obj.x + obj.width - 1) // s.TILE_SIZE)
+                end_y = int((obj.y + obj.height - 1) // s.TILE_SIZE)
                 
                 for y in range(start_y, end_y+1):
                     for x in range(start_x, end_x+1):
@@ -143,10 +143,10 @@ class WorldGraph:
             if interactable.collision:
                 rect = interactable.get_rect_collision()
 
-                start_x = int(rect.x // tile_size)
-                start_y = int(rect.y // tile_size)
-                end_x = int((rect.x + rect.width - 1) // tile_size)
-                end_y = int((rect.y + rect.height - 1) // tile_size)
+                start_x = int(rect.x // s.TILE_SIZE)
+                start_y = int(rect.y // s.TILE_SIZE)
+                end_x = int((rect.x + rect.width - 1) // s.TILE_SIZE)
+                end_y = int((rect.y + rect.height - 1) // s.TILE_SIZE)
 
                 for y in range(start_y, end_y + 1):
                     for x in range(start_x, end_x + 1):

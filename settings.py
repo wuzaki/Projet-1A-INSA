@@ -30,7 +30,7 @@ TEXT_COLOR = (0, 255, 0)
 HIGHLIGHT_COLOR = (0, 100, 0)
 
 # ==== Enemy Settings ====
-ENEMY_SPEED = 680 # pixels/seconde
+ENEMY_SPEED = 68 # pixels/seconde
 ENEMY_MIN_DIST = 100 # pixels
 ENEMY_MAX_DIST = 400 # pixels
 ENEMY_DELAY_DETECTION = 1.0 # secondes
@@ -45,8 +45,8 @@ def get_angle(p1, p2):
     dy = p2[1] - p1[1]
     return math.atan2(dy, dx)
 
-def world_to_grid(pos, tile_size):
-    return int(pos[0] // tile_size), int(pos[1] // tile_size)
+def world_to_grid(pos):
+    return int(pos[0] // TILE_SIZE), int(pos[1] // TILE_SIZE)
 
-def grid_to_world(cell, tile_size):
-    return cell[0] * tile_size, cell[1] * tile_size
+def grid_to_world(cell):
+    return cell[0] * TILE_SIZE, cell[1] * TILE_SIZE
