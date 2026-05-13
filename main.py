@@ -18,20 +18,12 @@ class Game:
 
         # Classes
         self.player = Player(self, 0, 0)
-
         self.world_graph = WorldGraph(self)
-        self.world_graph.load_map("map_test")
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
-        self.world_graph.spawn_player("player")
 
     def process(self):
         self.screen.fill((0, 0, 0))
         self.world_graph.process()
-
-    def show_fps(self, clock):
-        font = pg.font.SysFont("Arial", 28)
-        fps_text = font.render(f"FPS: {round(clock.get_fps(), 2)}", True, (255, 255, 255))
-        self.screen.blit(fps_text, (10, 10))
 
     def draw(self):
         self.world_graph.draw(self.screen)
@@ -39,19 +31,20 @@ class Game:
     def run(self):
         clock = pg.time.Clock()
         while True:
-            pg.display.set_caption(f"Projet Wuevia (Prototype) | FPS: {round(clock.get_fps(), 2)}")
-            self.process()
-            self.draw()
-            self.show_fps(clock)
-            pg.display.flip()
-
+            # Event Loop
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     return False
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         return False
-            self.dt = clock.tick(s.FPS) / 1000  # Convert ms to seconds
+                    
+            # ==== Update ====
+            self.dt = min(clock.tick(s.FPS) / 1000, 0.05)
+            self.process()
+            self.draw()
+            s.show_fps(self.screen, clock)
+            pg.display.flip()
 
 
 # ==== Main ====

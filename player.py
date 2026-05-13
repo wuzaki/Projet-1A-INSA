@@ -25,14 +25,10 @@ class Player(pg.sprite.Sprite):
         self.image = self.load_image("assets/player.png")
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
-        
+
     def move(self):
         keys = pg.key.get_pressed()
         dt = self.game.dt
-
-        ACCEL = 1800
-        FRICTION = 6.5
-        MAX_SPEED = 250
 
         direction = pg.Vector2(0, 0)
 
@@ -48,14 +44,14 @@ class Player(pg.sprite.Sprite):
         # évite boost diagonale
         if direction.length_squared() > 0:
             direction = direction.normalize()
-            self.vel += direction * ACCEL * dt
-
+            self.vel += direction * s.ACCEL * dt
+        
         # friction progressive
-        self.vel -= self.vel * FRICTION * dt
+        self.vel -= self.vel * s.FRICTION * dt
 
         # limite vitesse max
-        if self.vel.length() > MAX_SPEED:
-            self.vel.scale_to_length(MAX_SPEED)
+        if self.vel.length() > s.MAX_SPEED:
+            self.vel.scale_to_length(s.MAX_SPEED)
 
         # stop micro-glissement
         if self.vel.length_squared() < 4:
@@ -65,63 +61,21 @@ class Player(pg.sprite.Sprite):
 
         self.angle %= math.tau
 
-    def old_move(self):
-        keys = pg.key.get_pressed()
-        dt = self.game.dt
-
-        # reset accel
-        self.acc = pg.Vector2(0, 0)
-
-        direction = pg.Vector2(math.cos(self.angle), math.sin(self.angle))
-
-        # ==== INPUT ====
-        if keys[pg.K_UP]:
-            self.acc += direction * s.ACC_STRENGTH
-        if keys[pg.K_DOWN]:
-            self.acc -= direction * s.ACC_STRENGTH
-
-        if keys[pg.K_LEFT]:
-            self.angle -= s.ROT_SPEED * dt
-        if keys[pg.K_RIGHT]:
-            self.angle += s.ROT_SPEED * dt
-
-        # ==== FRICTION ====
-        self.acc += self.vel * s.FRICTION
-
-        # ==== PHYSIQUE ====
-        self.vel += self.acc * dt
-
-        # limite vitesse
-        if self.vel.length() > s.SPEED:
-            self.vel.scale_to_length(s.SPEED)
-
-        self.check_walls(dt)
-
-        self.angle %= math.tau
-
     def check_walls(self, dt):
         walls = self.game.world_graph.get_walls()
         # Pour X
         self.xy.x += self.vel.x * dt
-        self.update()
+        self.sync_rects()
         if self.feet.collidelist(walls) != -1:
             self.xy.x -= self.vel.x * dt
             self.vel.x = 0
     
         # Pour Y
         self.xy.y += self.vel.y * dt
-        self.update()
+        self.sync_rects()
         if self.feet.collidelist(walls) != -1:
             self.xy.y -= self.vel.y * dt
             self.vel.y = 0
-
-    def mouse_control(self):
-        mx, my = pg.mouse.get_pos()
-        if mx < s.MOUSE_BORDER_LEFT or mx > s.MOUSE_BORDER_RIGHT:
-            pg.mouse.set_pos([s.WIDTH//2, s.HEIGHT//2])
-        self.rel = pg.mouse.get_rel()[0]
-        self.rel = max(-s.MOUSE_MAX_REL, min(s.MOUSE_MAX_REL, self.rel))
-        self.angle += self.rel * s.MOUSE_SENSITIVITY * self.game.dt
 
     def load_image(self, path):
         sprite_sheet = pg.image.load(path).convert_alpha()
@@ -129,8 +83,11 @@ class Player(pg.sprite.Sprite):
         img.set_colorkey([0, 0, 0])
         return img
 
-    def update(self):
-        # self.move()
-        self.mouse_control()
-        self.rect.midbottom = self.xy
+    def sync_rects(self):
+        # Arrondi explicite pour éviter le jitter d'arrondi aléatoire
+        self.rect.midbottom = self.xy.x, self.xy.y
         self.feet.midbottom = self.rect.midbottom
+
+    def update(self):
+        self.move()
+        self.sync_rects()

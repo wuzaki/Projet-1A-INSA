@@ -32,6 +32,9 @@ class WorldGraph:
         self.maps = dict()
         self.tile_maps = dict() # Matrice de 0 et 1 pour l'algorithme A*
 
+        self.load_map("map_test", zoom=1.9)
+        self.spawn_player("player")
+
     def spawn_player(self, name):
         spawn_point = self.get_object_by_name(name)
         self.player.xy = pg.math.Vector2(spawn_point.x, spawn_point.y)
@@ -96,28 +99,27 @@ class WorldGraph:
 
     def process(self):
         self.get_group().update()
-        self.player.move()
-        [enemy.move() for enemy in self.get_enemies() if enemy.has_seen_player]
+        # [enemy.move() for enemy in self.get_enemies() if enemy.has_seen_player]
 
     def draw(self, screen):
         group = self.get_group()
-        group.draw(screen)
         group.center(self.player.rect.center)
+        group.draw(screen)
 
         # ==== Angle Visualizer ====
-        cam = group._map_layer  # caméra pyscroll
-        length = 15
+        # cam = group._map_layer  # caméra pyscroll
+        # length = 15
         
-        start_world = self.player.feet.center
-        end_world = (
-            start_world[0] + length * math.cos(self.player.angle),
-            start_world[1] + length * math.sin(self.player.angle)
-        )
+        # start_world = self.player.feet.center
+        # end_world = (
+        #     start_world[0] + length * math.cos(self.player.angle),
+        #     start_world[1] + length * math.sin(self.player.angle)
+        # )
 
-        start_screen = cam.translate_point(start_world)
-        end_screen = cam.translate_point(end_world)
+        # start_screen = cam.translate_point(start_world)
+        # end_screen = cam.translate_point(end_world)
 
-        pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
+        # pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
 
     def generate_tile_map(self, tmx_data, width, height, tile_size):
         cols = width // tile_size
