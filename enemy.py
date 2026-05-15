@@ -19,7 +19,7 @@ class Enemy(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
         self.angle = 0
-        self.has_seen_player = True
+        self.has_seen_player = False
 
         # ---- cache pathfinding ----
         self.path = []
@@ -83,7 +83,35 @@ class Enemy(pg.sprite.Sprite):
         move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
         self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
 
+    def run_logic(self):
+        if self.ray_cast_player():
+            direction = self.game.player.xy - self.xy
+            if direction.length() > s.ENEMY_MIN_DIST:
+                self.move()
+
+    def ray_cast_player(self):
+        player_pos = self.game.player.xy
+        direction = player_pos - self.xy
+        distance = direction.length()
+        if distance == 0:
+            return True
+        direction = direction.normalize()
+        step_size = s.TILE_SIZE / 4
+        steps = int(distance / step_size)
+        pos = pg.math.Vector2(self.xy)
+        walls = self.game.world_graph.get_walls()
+        w, h = self.feet.width, self.feet.height
+
+        for _ in range(steps):
+            pos += direction * step_size
+            test_rect = pg.Rect(0, 0, w, h)
+            test_rect.midbottom = pos
+            for wall in walls:
+                if test_rect.colliderect(wall):
+                    return False
+        return True
+
     def update(self):
-        self.move()
+        self.run_logic()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom

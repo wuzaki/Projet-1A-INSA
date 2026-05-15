@@ -78,9 +78,7 @@ class Player(pg.sprite.Sprite):
             self.vel.y = 0
 
     def load_image(self, path):
-        sprite_sheet = pg.image.load(path).convert_alpha()
-        img = sprite_sheet.subsurface((0, 0, 32, 32))
-        img.set_colorkey([0, 0, 0])
+        img = pg.image.load(path).convert_alpha().subsurface((0, 0, 32, 32))
         return img
 
     def sync_rects(self):
