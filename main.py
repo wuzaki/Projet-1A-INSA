@@ -13,7 +13,7 @@ Ce fichier contient la classe Game pour la gestion principale du jeu
 # ==== Game ====
 class Game:
     def __init__(self, w, h):
-        self.screen = pg.display.set_mode((w, h))
+        self.screen = pg.display.set_mode((w, h), pg.NOFRAME)
         self.dt = 1
 
         # Classes
@@ -27,6 +27,8 @@ class Game:
 
     def draw(self):
         self.world_graph.draw(self.screen)
+        self.player.draw(self.screen)
+        [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
 
     def run(self):
         clock = pg.time.Clock()
@@ -38,6 +40,9 @@ class Game:
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         return False
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    if event.button == 1:  # clic gauche
+                        self.player.weapon.shoot()
                     
             # ==== Update ====
             self.dt = min(clock.tick(s.FPS) / 1000, 0.05)

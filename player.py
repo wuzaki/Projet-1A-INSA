@@ -3,6 +3,8 @@ import pygame as pg
 import time as t
 import math
 
+from weapon import Weapon
+
 """
 Ce fichier contient la classe Player pour la gestion du personnage du joueur.
 """
@@ -25,6 +27,15 @@ class Player(pg.sprite.Sprite):
         self.image = self.load_image("assets/player.png")
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
+
+        # ==== Health and Weapon ====
+        self.health = 100
+        self.weapon = Weapon(self.game, self, "shotgun")
+
+    def lose_health(self, amount):
+        self.health -= amount
+        if self.health <= 0:
+            self.kill()
 
     def move(self):
         keys = pg.key.get_pressed()
@@ -59,6 +70,10 @@ class Player(pg.sprite.Sprite):
 
         self.check_walls(dt)
 
+        # Get Angle
+        result = self.get_angle_coord()
+        self.angle = s.get_angle(result[0], result[1])
+
         self.angle %= math.tau
 
     def check_walls(self, dt):
@@ -85,6 +100,73 @@ class Player(pg.sprite.Sprite):
         self.rect.midbottom = self.xy.x, self.xy.y
         self.feet.midbottom = self.rect.midbottom
 
+    def get_angle_coord(self):
+        cam = self.game.world_graph.get_group()._map_layer
+        start_screen = cam.translate_point(self.rect.center)
+        end_screen = pg.mouse.get_pos()
+
+        return start_screen, end_screen
+
     def update(self):
         self.move()
         self.sync_rects()
+
+    def draw(self, screen):
+        self.show_angle(screen)
+        self.show_health(screen)
+
+    def show_health(self, screen):
+        s.show_basic_text(screen, f"Health: {self.health}", (10, 40))
+
+    def show_angle(self, screen):
+        # ==== Angle Visualizer ====
+        cam = self.game.world_graph.get_group()._map_layer  # caméra pyscroll
+        length = 30
+        
+        start_world = self.rect.center
+        end_world = (
+             start_world[0] + length * math.cos(self.angle),
+             start_world[1] + length * math.sin(self.angle)
+        )
+
+        start_screen = cam.translate_point(start_world)
+        end_screen = cam.translate_point(end_world)
+
+        pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
+
+
+# ==== Projectiles =====
+class Projectile(pg.sprite.Sprite):
+    def __init__(self, game, pos, angle):
+        super().__init__()
+        self.game = game
+        self._layer = 11  # plus petit que le joueur
+
+        self.xy = pg.math.Vector2(pos)
+        self.angle = angle
+        self.speed = 800
+
+        self.image = pg.Surface((8, 4), pg.SRCALPHA)
+        pg.draw.rect(self.image, (255, 255, 0), (0, 0, 8, 4))
+        self.image = pg.transform.rotate(self.image, -math.degrees(angle))
+        self.rect = self.image.get_rect(center=self.xy)
+
+    def kill(self):
+        super().kill()
+
+    def update(self):
+        dt = self.game.dt
+        direction = pg.math.Vector2(math.cos(self.angle), math.sin(self.angle))
+        self.xy += direction * self.speed * dt
+        self.rect.center = self.xy
+
+        # Check Walls
+        if self.rect.collidelist(self.game.world_graph.get_walls()) != -1:
+            self.kill()
+        
+        enemies = self.game.world_graph.get_enemies()
+        for enemy in enemies:
+            if self.rect.colliderect(enemy.rect):
+                enemy.lose_health(25)
+                self.kill()
+                break

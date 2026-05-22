@@ -35,6 +35,11 @@ ENEMY_MIN_DIST = 100 # pixels
 ENEMY_MAX_DIST = 400 # pixels
 ENEMY_DELAY_DETECTION = 1.0 # secondes
 
+def show_basic_text(screen, text, pos):
+     font = pg.font.SysFont("Raleway", 28)
+     text_surface = font.render(text, True, (255, 255, 255))
+     screen.blit(text_surface, pos)
+
 def show_fps(screen, clock):
     font = pg.font.SysFont("Raleway", 28)
     fps_text = font.render(f"FPS: {round(clock.get_fps(), 2)}", True, (255, 255, 255))
@@ -44,6 +49,11 @@ def get_angle(p1, p2):
     dx = p2[0] - p1[0]
     dy = p2[1] - p1[1]
     return math.atan2(dy, dx)
+
+def correct_shift(screen_x, screen_y, world_x, world_y, zoom):
+    x = (screen_x - world_x) * zoom
+    y = (screen_y - world_y) * zoom
+    return x, y
 
 def world_to_grid(pos):
     return int(pos[0] // TILE_SIZE), int(pos[1] // TILE_SIZE)

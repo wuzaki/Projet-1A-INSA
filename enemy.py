@@ -23,8 +23,14 @@ class Enemy(pg.sprite.Sprite):
 
         # ---- cache pathfinding ----
         self.path = []
+        self.health = 100
         # self.path_timer = 0
         # self.last_goal = None
+
+    def lose_health(self, amount):
+        self.health -= amount
+        if self.health <= 0:
+            self.kill()
 
     def load_image(self, path):
         img = pg.image.load(path).convert_alpha().subsurface((0, 0, 32, 32))
@@ -115,3 +121,20 @@ class Enemy(pg.sprite.Sprite):
         self.run_logic()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom
+
+    def draw(self, screen):
+        if self.health <= 0:
+            return
+        self.show_health(screen)
+
+    def show_health(self, screen):
+        zoom = self.game.world_graph.get_group()._map_layer.zoom
+        bar_width = 23 * zoom
+        bar_height = 3 * zoom
+        rect = pg.Rect(0, 0, bar_width, bar_height)
+
+        cam = self.game.world_graph.get_group()._map_layer
+        rect.center = cam.translate_point((self.rect.centerx, self.rect.centery - 20))
+
+        pg.draw.rect(screen, (0, 0, 0), rect)
+        pg.draw.rect(screen, (255, 0, 0), (rect.x, rect.y, rect.width * (self.health / 100), rect.height))
