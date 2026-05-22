@@ -25,7 +25,11 @@
   <object id="2" type="collision" x="0.593032" y="34.3958" width="32.0237" height="444.774"/>
   <object id="3" type="collision" x="448.925" y="34.3958" width="32.0237" height="444.181"/>
   <object id="4" type="collision" x="27.8725" y="445.96" width="425.204" height="35.5819"/>
-  <object id="5" name="map_test" type="portal" x="21.3491" y="94.8851" width="21.9422" height="49.8147"/>
+  <object id="5" name="map_test" type="portal" x="21.3491" y="94.8851" width="21.9422" height="49.8147">
+   <properties>
+    <property name="access" value="true"/>
+   </properties>
+  </object>
   <object id="6" name="map_test" x="132.839" y="110.897">
    <point/>
   </object>

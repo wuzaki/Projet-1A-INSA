@@ -10,6 +10,50 @@ Ce fichier contient la classe Terminal, pour les terminaux d'information.
 
 # ==== Terminal ====
 class Terminal(Interactable):
+    def __init__(self, game, x, y, w, h, map_name, name="", access=True):
+        super().__init__(game, x, y, w, h)
+        self.name = name
+        self.map_name = map_name
+        self.access = False if access == "false" else True  # Convertit la chaîne "false" en booléen False
+        self.collision = True
+        self.term_data = self.load_data()
+
+        # ==== Sprite ====
+        self.image = self.load_image("assets/interactables/terminal.png")
+
+    def load_data(self):
+        try:
+            with open(f"assets/terminal_data/{self.name}.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"Terminal data file not found for {self.name}")
+            return {}
+
+    def get_access(self):
+        self.access = True
+
+    def update(self):
+        keys = pg.key.get_pressed()
+        if self.access:
+            if self.rect.inflate(20, 20).colliderect(self.game.player.feet) and keys[pg.K_a]:
+                main(self.game)
+            
+
+# ===== Terminal Mode =====
+def main(game):
+    while True:
+            pg.display.flip()
+
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_ESCAPE:
+                        return False
+
+
+class OldTerminal(Interactable):
     def __init__(self, game, x, y, w, h, map_name, name=""):
         super().__init__(game, x, y, w, h)
         self.name = name

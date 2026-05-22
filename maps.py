@@ -54,13 +54,15 @@ class WorldGraph:
             if obj.type == "collision":
                 walls.append(pg.Rect(obj.x, obj.y, obj.width, obj.height))
             elif obj.type == "portal":
-                interactables.append(Portal(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name))
+                access = obj.properties["access"]
+                interactables.append(Portal(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name, access))
             elif obj.type == "terminal":
-                interactables.append(Terminal(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name))
+                access = obj.properties["access"]
+                interactables.append(Terminal(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name, access))
             elif obj.type == "ammo":
                 interactables.append(Ammo(self.game, obj.x, obj.y, obj.width, obj.height))
             elif obj.type == "key":
-                interactables.append(Key(self.game, obj.x, obj.y, obj.width, obj.height))
+                interactables.append(Key(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name))
             elif obj.type == "enemy":
                 enemies.append(Enemy(self.game, obj.x, obj.y))
 
