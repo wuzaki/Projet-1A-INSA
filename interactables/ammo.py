@@ -18,5 +18,6 @@ class Ammo(Interactable):
     def update(self):
         if self.rect.colliderect(self.game.player.feet):
             # print("Ammo collected!")
+            self.game.player.weapon.ammo_count += 10  # ou une autre quantité selon le type de munition
             self.kill()
             self.game.world_graph.get_group().remove(self)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="104">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="105">
  <tileset firstgid="1" source="nature.tsx"/>
  <layer id="1" name="floor" width="25" height="25">
   <data encoding="csv">
@@ -85,5 +85,6 @@
   <object id="57" name="1" type="enemy" x="508.031" y="220.41">
    <point/>
   </object>
+  <object id="104" name="term_01" type="key" x="288.609" y="191.747" width="31.3912" height="32.253"/>
  </objectgroup>
 </map>
