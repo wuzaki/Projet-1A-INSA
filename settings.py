@@ -36,6 +36,17 @@ ENEMY_SHOOT_MAX_DIST = 180 # pixels
 ENEMY_MAX_DIST = 400 # pixels
 ENEMY_DELAY_DETECTION = 1.0 # secondes
 
+# ==== Weapon Constants ====
+COOLDOWN = {
+        "single": {"cooldown": 0.1, "damage": 25},
+        "shotgun": {"cooldown": 0.5, "damage": 10},
+        "raffle" : {"cooldown": 0, "damage": 5},
+        "kniffe": {"cooldown": 0.2, "damage": 50},
+        "enemy_single": {"cooldown": 0.25, "damage": 25},
+        "enemy_shotgun": {"cooldown": 0.5, "damage": 10},
+        "enemy_raffle" : {"cooldown": 0, "damage": 5}
+}
+
 def show_basic_text(screen, text, pos):
      font = pg.font.SysFont("Raleway", 28)
      text_surface = font.render(text, True, (255, 255, 255))

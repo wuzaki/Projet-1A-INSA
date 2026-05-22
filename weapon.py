@@ -9,18 +9,10 @@ Ce fichier contient la classe Weapon pour la gestion des armes et des projectile
 
 # ==== Weapon ====
 class Weapon:
-    COOLDOWN = {
-        "single": 0.1, 
-        "shotgun": 0.5,
-        "raffle" : 0,
-        "enemy_single": 0.25,
-        "enemy_raffle" : 0
-    }
-
     def __init__(self, game, owner, mode, ammo_count=10):
         self.game = game
         self.owner = owner
-        self.cooldown = self.COOLDOWN.get(mode, 0.5)  # secondes entre deux tirs
+        self.cooldown = s.COOLDOWN.get(mode, {"cooldown": 0.5})["cooldown"]  # secondes entre deux tirs
         self.last_shot_time = 0
         self.mode = mode  # ou "single" ou "shotgun"
         self.ammo_count = ammo_count  # pour les armes à munitions limitées
@@ -36,27 +28,37 @@ class Weapon:
         if not self.can_shoot():
             return
         
-        if self.mode in ["single", "enemy_single"]:
-            projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle)
+        if self.mode == "kniffe":
+            # Attaque de mêlée : on vérifie les ennemis proches
+            for enemy in self.game.world_graph.get_enemies():
+                hitbox = enemy.rect.inflate(20, 20)
+                if self.owner.rect.colliderect(hitbox):
+                    enemy.lose_health(s.COOLDOWN.get(self.mode, {"damage": 50})["damage"])
+        
+        elif self.mode in ["single", "enemy_single"]:
+            projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle, damage=s.COOLDOWN.get(self.mode, {"damage": 25})["damage"])
             self.game.world_graph.get_group().add(projectile)
 
-        elif self.mode == "shotgun":
+        elif self.mode in ["shotgun", "enemy_shotgun"]:
             for i in range(self.pellets):
                 angle = self.owner.angle + (i - (self.pellets - 1) / 2) * self.spread_angle
-                projectile = Projectile(self.game, self.owner, self.owner.rect.center, angle)
+                projectile = Projectile(self.game, self.owner, self.owner.rect.center, angle, damage=s.COOLDOWN.get(self.mode, {"damage": 10})["damage"])
                 self.game.world_graph.get_group().add(projectile)
 
         self.last_shot_time = t.time()
-        self.ammo_count -= 1
+
+        if self.mode != "kniffe":
+            self.ammo_count -= 1
 
 
 # ==== Projectiles =====
 class Projectile(pg.sprite.Sprite):
-    def __init__(self, game, owner, pos, angle):
+    def __init__(self, game, owner, pos, angle, damage=25):
         super().__init__()
         self.game = game
         self.owner = owner
         self._layer = 11  # plus petit que le joueur
+        self.damage = damage
 
         self.xy = pg.math.Vector2(pos)
         self.angle = angle
@@ -85,11 +87,11 @@ class Projectile(pg.sprite.Sprite):
             # Le joueur tire → on touche les ennemis
             for enemy in self.game.world_graph.get_enemies():
                 if self.rect.colliderect(enemy.rect):
-                    enemy.lose_health(25)
+                    enemy.lose_health(self.damage)
                     self.kill()
                     return
         else:
             # Un ennemi tire → on touche le joueur
             if self.rect.colliderect(self.game.player.rect):
-                self.game.player.lose_health(5)
+                self.game.player.lose_health(self.damage)
                 self.kill()
