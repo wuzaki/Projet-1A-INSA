@@ -31,7 +31,8 @@ HIGHLIGHT_COLOR = (0, 100, 0)
 
 # ==== Enemy Settings ====
 ENEMY_SPEED = 68 # pixels/seconde
-ENEMY_MIN_DIST = 100 # pixels
+ENEMY_MOVE_MIN_DIST = 100 # pixels
+ENEMY_SHOOT_MAX_DIST = 180 # pixels
 ENEMY_MAX_DIST = 400 # pixels
 ENEMY_DELAY_DETECTION = 1.0 # secondes
 

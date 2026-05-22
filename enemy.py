@@ -1,6 +1,9 @@
 import settings as s
 import pygame as pg
 import math
+import time as t
+
+from weapon import Weapon
 
 """
 Ce fichier contient la classe Enemy pour la gestion des ennemis.
@@ -24,6 +27,9 @@ class Enemy(pg.sprite.Sprite):
         # ---- cache pathfinding ----
         self.path = []
         self.health = 100
+        self.weapon = Weapon(self.game, self, "enemy_single", ammo_count=15)
+        self.last_seen_player_time = 0
+        self.time_to_forget_player = 7  # temps en secondes après lequel l'ennemi oublie le joueur
         # self.path_timer = 0
         # self.last_goal = None
 
@@ -89,11 +95,36 @@ class Enemy(pg.sprite.Sprite):
         move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
         self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
 
-    def run_logic(self):
+    def reload_ammo(self):
+        if t.time() - self.weapon.last_shot_time >= 3:  # délai de rechargement
+            self.weapon.ammo_count = 10
+
+    def can_move(self):
         if self.ray_cast_player():
+            self.has_seen_player = True
+            self.last_seen_player_time = t.time()
+            return True
+        elif self.has_seen_player:
+            if t.time() - self.last_seen_player_time <= self.time_to_forget_player:
+                return True
+            else:
+                self.has_seen_player = False
+                return False
+
+    def shoot(self):
+        if not self.can_shoot():
+            return
+
+    def run_logic(self):
+        if self.weapon.ammo_count <= 0:
+            self.reload_ammo()
+
+        if self.can_move():
             direction = self.game.player.xy - self.xy
-            if direction.length() > s.ENEMY_MIN_DIST:
+            if direction.length() > s.ENEMY_MOVE_MIN_DIST:
                 self.move()
+            if direction.length() <= s.ENEMY_SHOOT_MAX_DIST and self.ray_cast_player():
+                self.weapon.shoot()
 
     def ray_cast_player(self):
         player_pos = self.game.player.xy
@@ -118,6 +149,7 @@ class Enemy(pg.sprite.Sprite):
         return True
 
     def update(self):
+        self.angle = s.get_angle(self.rect.center, self.game.player.rect.center)
         self.run_logic()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom
@@ -126,6 +158,17 @@ class Enemy(pg.sprite.Sprite):
         if self.health <= 0:
             return
         self.show_health(screen)
+        self.show_enemy_name(screen)
+
+    def show_enemy_name(self, screen):
+        zoom = self.game.world_graph.get_group()._map_layer.zoom
+        font_text = pg.font.Font("assets/pixel_font.ttf", 8 * zoom).render("test", True, (255, 255, 255))
+        font_rect = font_text.get_rect()
+
+        cam = self.game.world_graph.get_group()._map_layer
+        font_rect.center = cam.translate_point((self.rect.centerx, self.rect.centery - 28))
+
+        screen.blit(font_text, font_rect)
 
     def show_health(self, screen):
         zoom = self.game.world_graph.get_group()._map_layer.zoom

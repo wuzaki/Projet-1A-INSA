@@ -11,28 +11,32 @@ Ce fichier contient la classe Weapon pour la gestion des armes et des projectile
 class Weapon:
     COOLDOWN = {
         "single": 0.1, 
-        "shotgun": 0.5
+        "shotgun": 0.5,
+        "raffle" : 0,
+        "enemy_single": 0.25,
+        "enemy_raffle" : 0
     }
 
-    def __init__(self, game, owner, mode):
+    def __init__(self, game, owner, mode, ammo_count=10):
         self.game = game
         self.owner = owner
         self.cooldown = self.COOLDOWN.get(mode, 0.5)  # secondes entre deux tirs
         self.last_shot_time = 0
         self.mode = mode  # ou "single" ou "shotgun"
+        self.ammo_count = ammo_count  # pour les armes à munitions limitées
 
         # === ShotGun Specific ===
         self.pellets = 5
         self.spread_angle = math.radians(5)  # écart total entre les pellets
 
     def can_shoot(self):
-        return t.time() - self.last_shot_time >= self.cooldown
+        return t.time() - self.last_shot_time >= self.cooldown and self.ammo_count > 0
 
     def shoot(self):
         if not self.can_shoot():
             return
         
-        if self.mode == "single":
+        if self.mode in ["single", "enemy_single"]:
             projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle)
             self.game.world_graph.get_group().add(projectile)
 
@@ -43,6 +47,7 @@ class Weapon:
                 self.game.world_graph.get_group().add(projectile)
 
         self.last_shot_time = t.time()
+        self.ammo_count -= 1
 
 
 # ==== Projectiles =====
@@ -86,5 +91,5 @@ class Projectile(pg.sprite.Sprite):
         else:
             # Un ennemi tire → on touche le joueur
             if self.rect.colliderect(self.game.player.rect):
-                self.game.player.lose_health(10)
+                self.game.player.lose_health(5)
                 self.kill()
