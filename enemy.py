@@ -181,4 +181,4 @@ class Enemy(pg.sprite.Sprite):
 
         pg.draw.rect(screen, (0, 0, 0), rect)
         pg.draw.rect(screen, s.ENEMY_COLOR_HEALTH_BAR, (rect.x, rect.y, rect.width * (self.health / 100), rect.height))
-        pg.draw.rect(screen, (255, 255, 255), rect, 1)
+        # pg.draw.rect(screen, (255, 255, 255), rect, 1)
