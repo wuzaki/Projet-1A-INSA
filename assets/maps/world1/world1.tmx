@@ -30,7 +30,7 @@
     <property name="access" value="true"/>
    </properties>
   </object>
-  <object id="6" name="map_test" x="132.839" y="110.897">
+  <object id="6" name="_map_test" x="132.839" y="110.897">
    <point/>
   </object>
  </objectgroup>

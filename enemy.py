@@ -158,7 +158,7 @@ class Enemy(pg.sprite.Sprite):
         if self.health <= 0:
             return
         self.show_health(screen)
-        self.show_enemy_name(screen)
+        # self.show_enemy_name(screen)
 
     def show_enemy_name(self, screen):
         zoom = self.game.world_graph.get_group()._map_layer.zoom
@@ -180,4 +180,5 @@ class Enemy(pg.sprite.Sprite):
         rect.center = cam.translate_point((self.rect.centerx, self.rect.centery - 20))
 
         pg.draw.rect(screen, (0, 0, 0), rect)
-        pg.draw.rect(screen, (255, 0, 0), (rect.x, rect.y, rect.width * (self.health / 100), rect.height))
+        pg.draw.rect(screen, s.ENEMY_COLOR_HEALTH_BAR, (rect.x, rect.y, rect.width * (self.health / 100), rect.height))
+        pg.draw.rect(screen, (255, 255, 255), rect, 1)

@@ -60,7 +60,8 @@ class WorldGraph:
                 access = obj.properties["access"]
                 interactables.append(Terminal(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name, access))
             elif obj.type == "ammo":
-                interactables.append(Ammo(self.game, obj.x, obj.y, obj.width, obj.height))
+                count = obj.properties.get("count", 10)
+                interactables.append(Ammo(self.game, obj.x, obj.y, obj.width, obj.height, count))
             elif obj.type == "key":
                 interactables.append(Key(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name))
             elif obj.type == "enemy":

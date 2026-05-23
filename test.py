@@ -6,7 +6,7 @@ pygame.init()
 
 # ==== Settings ====
 WIDTH, HEIGHT = 800, 600
-FONT_SIZE = 20
+FONT_SIZE = 25
 LINE_HEIGHT = FONT_SIZE + 5
 BG_COLOR = (10, 10, 30)
 TEXT_COLOR = (0, 255, 0)
@@ -14,7 +14,7 @@ HIGHLIGHT_COLOR = (0, 100, 0)
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Terminal Fallout")
-font = pygame.font.SysFont("Monospace", FONT_SIZE, "bold")
+font = pygame.font.SysFont("Raleway", FONT_SIZE, "bold")
 
 # ==== Example JSON Tree ====
 terminal_data = {

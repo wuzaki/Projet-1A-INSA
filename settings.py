@@ -36,6 +36,8 @@ ENEMY_SHOOT_MAX_DIST = 180 # pixels
 ENEMY_MAX_DIST = 400 # pixels
 ENEMY_DELAY_DETECTION = 1.0 # secondes
 
+ENEMY_COLOR_HEALTH_BAR = (204, 29, 29)
+
 # ==== Weapon Constants ====
 COOLDOWN = {
         "single": {"cooldown": 0.1, "damage": 25},

@@ -65,10 +65,10 @@
     <property name="access" value="false"/>
    </properties>
   </object>
-  <object id="9" name="world2" type="spawn" x="689.894" y="185.817">
+  <object id="9" name="_world2" type="spawn" x="689.894" y="185.817">
    <point/>
   </object>
-  <object id="10" name="world1" type="spawn" x="143.316" y="190.759">
+  <object id="10" name="_world1" type="spawn" x="143.316" y="190.759">
    <point/>
   </object>
   <object id="15" name="player" x="182.851" y="329.133">
@@ -79,7 +79,11 @@
     <property name="access" value="false"/>
    </properties>
   </object>
-  <object id="17" type="ammo" x="448" y="128" width="32" height="32"/>
+  <object id="17" type="ammo" x="448" y="128" width="32" height="32">
+   <properties>
+    <property name="count" value="100"/>
+   </properties>
+  </object>
   <object id="20" type="collision" x="352" y="32" width="64" height="320"/>
   <object id="21" type="collision" x="352" y="416" width="64" height="352"/>
   <object id="24" type="collision" x="0" y="0" width="800" height="32"/>
@@ -90,12 +94,5 @@
    <point/>
   </object>
   <object id="104" name="term_01" type="key" x="288.609" y="191.747" width="31.3912" height="32.253"/>
-  <object id="105" name="term_02" type="terminal" x="96" y="256" width="32" height="32">
-   <properties>
-    <property name="access" value="false"/>
-   </properties>
-  </object>
-  <object id="106" name="term_02" type="key" x="96" y="384" width="31.3912" height="32.253"/>
-  <object id="107" name="world1" type="key" x="56.4566" y="58.0025" width="31.3912" height="32.253"/>
  </objectgroup>
 </map>

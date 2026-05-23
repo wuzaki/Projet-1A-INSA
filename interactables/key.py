@@ -17,14 +17,14 @@ class Key(Interactable):
         self.name = name
         self.connected_item_id = connected_item_id
 
-        print(self.name, self.connected_item_id)
+        # print(self.name, self.connected_item_id)
         self.connected_item = None
         
         # ==== Sprite ====
         self.image = self.load_image("assets/interactables/key.png")
 
     def get_connected_item(self):
-        print(self.game)
+        # print(self.game)
         for item in self.game.world_graph.get_interactables():
             if isinstance(item, (Terminal, Portal)) and item.name == self.connected_item_id:
                 return item

@@ -27,5 +27,5 @@ class Portal(Interactable):
 
                 world.current_map = self.target
                 self.pathfinding = PathFinding(self.game.world_graph.get_tile_map())
-                world.spawn_player(self.from_map)  # place le joueur sur le point de spawn correct
+                world.spawn_player("_"+self.from_map)  # place le joueur sur le point de spawn correct
                 # print("Current map:", world.current_map, "Spawn:", self.from_map)
