@@ -68,12 +68,12 @@ class TerminalUI:
     def __init__(self, game, data):
         self.game = game
         game.draw()  # dessine le jeu en arrière-plan
-        self.screen = game.screen          # fenêtre réelle (taille quelconque)
+        self.screen = game.screen # fenêtre réelle (taille quelconque)
 
-        self.bg = self.screen.copy()         # copie de l'arrière-plan pour le flouter ou le réutiliser
+        self.bg = self.screen.copy() # copie de l'arrière-plan pour le flouter ou le réutiliser
         # Overlay sombre par-dessus
         overlay = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
-        overlay.fill((0, 0, 0, 160))  # 160/255 ≈ 63% d'opacité, ajuste à ton goût
+        overlay.fill((0, 0, 0, 160)) # 160/255 ≈ 63% d'opacité, ajuste à ton goût
         self.bg.blit(overlay, (0, 0))
 
         self.data = data
@@ -89,9 +89,7 @@ class TerminalUI:
         self.init_state()
         self.load_node("root")
 
-    # ------------------------------------------------------------------
     # Centrage : blitte self.surf au centre de self.screen
-    # ------------------------------------------------------------------
     def blit_centered(self, clock):
         win_w, win_h = self.screen.get_size()
         ox = (win_w - self.TERM_W) // 2
@@ -101,9 +99,7 @@ class TerminalUI:
         s.show_fps(self.screen, clock)
         pg.display.flip()
 
-    # ------------------------------------------------------------------
-    # Surfaces statiques (scanlines, vignette, flash) — taille fixe
-    # ------------------------------------------------------------------
+    # Surfaces statiques (scanlines, vignette, flash)
     def build_static_surfaces(self):
         W, H = self.TERM_W, self.TERM_H
 
