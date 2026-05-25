@@ -92,6 +92,11 @@ class Projectile(pg.sprite.Sprite):
                     return
         else:
             # Un ennemi tire → on touche le joueur
-            if self.rect.colliderect(self.game.player.rect):
+            new_rect = self.game.player.rect.copy()
+            new_rect.size = (
+                new_rect.width // 2,
+                new_rect.height // 2
+            )
+            if self.rect.colliderect(new_rect):
                 self.game.player.lose_health(self.damage)
                 self.kill()
