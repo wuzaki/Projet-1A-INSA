@@ -4,27 +4,31 @@ import time as t
 import math
 
 from weapon import Weapon
+from animation import AnimateSprite
 
 """
 Ce fichier contient la classe Player pour la gestion du personnage du joueur.
 """
 
 # ==== Player ====
-class Player(pg.sprite.Sprite):
+class Player(AnimateSprite):
     def __init__(self, game, x, y):
-        super().__init__()
+        super().__init__("assets/player.png")
         self.game = game
         self._layer = 12  # plus petit que le joueur
 
         # ==== Position ====
         self.xy = pg.math.Vector2(x, y)
         self.vel = pg.math.Vector2(0, 0)
-        self.acc = pg.math.Vector2(0, 0)
+        # self.acc = pg.math.Vector2(0, 0)
         self.rel = 0
         self.angle = 0
 
         # ==== Sprite ====
-        self.image = self.load_image("assets/player.png")
+        # self.image = self.load_image("assets/player.png")
+        # self.sprite_sheet = pg.image.load("assets/player.png").convert_alpha()
+        # self.image = self.get_image(0, 0)
+        self.image = self.images["down"][0] # De AnimateSprite
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
 
@@ -46,17 +50,22 @@ class Player(pg.sprite.Sprite):
 
         direction = pg.Vector2(0, 0)
 
-        if keys[pg.K_z]:
-            direction.y -= 1
-        if keys[pg.K_s]:
-            direction.y += 1
         if keys[pg.K_q]:
             direction.x -= 1
+            side = "left"
         if keys[pg.K_d]:
             direction.x += 1
+            side = "right"
+        if keys[pg.K_z]:
+            direction.y -= 1
+            side = "up"
+        if keys[pg.K_s]:
+            direction.y += 1
+            side = "down"
 
         # évite boost diagonale
         if direction.length_squared() > 0:
+            self.switch_animation(side) # Animation du sprite
             direction = direction.normalize()
             self.vel += direction * s.ACCEL * dt
         
@@ -95,6 +104,11 @@ class Player(pg.sprite.Sprite):
             self.xy.y -= self.vel.y * dt
             self.vel.y = 0
 
+    def get_image(self, x, y):
+        image = pg.Surface([32, 32], pg.SRCALPHA)
+        image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
+        return image
+
     def load_image(self, path):
         img = pg.image.load(path).convert_alpha().subsurface((0, 0, 32, 32)) # subsurface((0, 0, 32, 32))
         return img
@@ -113,6 +127,7 @@ class Player(pg.sprite.Sprite):
     def update(self):
         self.move()
         self.sync_rects()
+        # self.switch_animation("down")
 
     def draw(self, screen):
         self.show_angle(screen)

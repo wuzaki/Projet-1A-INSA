@@ -9,8 +9,8 @@ FPS = 60
 
 # ==== Player Settings ====
 ACCEL = 1600
-FRICTION = 5.5
-MAX_SPEED = 250
+FRICTION = 3.5 # 5.5
+MAX_SPEED = 150 # 250
 
 
 MOUSE_SENSITIVITY = 0.3

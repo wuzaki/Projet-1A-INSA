@@ -4,32 +4,34 @@ import math
 import time as t
 
 from weapon import Weapon
+from animation import AnimateSprite
 
 """
 Ce fichier contient la classe Enemy pour la gestion des ennemis.
 """
 
 # ==== Enemy ====
-class Enemy(pg.sprite.Sprite):
-    PATH_RECALC_INTERVAL = 10   # frames entre deux recalculs
-    PATH_GOAL_THRESHOLD  = 1    # cellules de tolérance avant de recalculer
+class Enemy(AnimateSprite):
+    PATH_RECALC_INTERVAL = 10 # frames entre deux recalculs
+    PATH_GOAL_THRESHOLD = 1 # cellules de tolérance avant de recalculer
 
     def __init__(self, game, x, y):
-        super().__init__()
+        super().__init__("assets/player.png")
         self.game = game
         self.xy = pg.math.Vector2(x, y)
-        self.image = self.load_image("assets/player.png")
+        # self.image = self.load_image("assets/player.png")
+        self.image = self.images["down"][0]
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
         self.angle = 0
         self.has_seen_player = False
 
-        # ---- cache pathfinding ----
+        # Pathfinding + Weapon
         self.path = []
         self.health = 100
         self.weapon = Weapon(self.game, self, "enemy_single", ammo_count=15)
         self.last_seen_player_time = 0
-        self.time_to_forget_player = 7  # temps en secondes après lequel l'ennemi oublie le joueur
+        self.time_to_forget_player = 7 # temps en secondes après lequel l'ennemi oublie le joueur
         self.path_timer = 0
         # self.last_goal = None
 
@@ -79,12 +81,10 @@ class Enemy(pg.sprite.Sprite):
             self.path_timer = 0
 
     def move(self):
-        # self.refresh_path()
+        self.refresh_path()
         # start = s.world_to_grid(self.feet.center)
         # goal = s.world_to_grid(self.game.player.feet.center)
         # self.path = self.game.pathfinding.find_path(start, goal)
-
-        self.refresh_path()
 
         if not self.path:
             return
@@ -105,8 +105,32 @@ class Enemy(pg.sprite.Sprite):
             return
 
         angle = math.atan2(direction.y, direction.x)
+
+        # Animation du sprite
+        if angle >= -math.pi / 4 and angle < math.pi / 4:
+            self.switch_animation("right")
+        elif angle >= math.pi / 4 and angle < 3 * math.pi / 4:
+            self.switch_animation("down")
+        elif angle >= 3 * math.pi / 4 or angle < -3 * math.pi / 4:
+            self.switch_animation("left")
+        else:
+            self.switch_animation("up")
+
         move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
         self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
+
+        def get_direction_from_angle(self, angle):
+            if angle >= -math.pi / 4 and angle < math.pi / 4:
+                return "right"
+            elif angle >= math.pi / 4 and angle < 3 * math.pi / 4:
+                return "down"
+            elif angle >= 3 * math.pi / 4 or angle < -3 * math.pi / 4:
+                return "left"
+            else:
+                return "up"
+
+        def get_angle_for_direction(self, direction):
+            return {"right": 0, "down": math.pi / 2, "left": math.pi, "up": -math.pi / 2}[direction]
 
     def reload_ammo(self):
         if t.time() - self.weapon.last_shot_time >= 3:  # délai de rechargement
