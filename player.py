@@ -117,12 +117,16 @@ class Player(pg.sprite.Sprite):
         self.show_angle(screen)
         self.show_health(screen)
         self.show_ammo_count(screen)
+        self.show_weapon_mode(screen)
 
     def show_health(self, screen):
         s.show_basic_text(screen, f"Health: {self.health}", (10, 40))
 
     def show_ammo_count(self, screen):
         s.show_basic_text(screen, f"Ammo: {self.weapon.ammo_count}", (10, 60))
+
+    def show_weapon_mode(self, screen):
+        s.show_basic_text(screen, f"Mode: {self.weapon.mode}", (10, 80))
 
     def show_angle(self, screen):
         # ==== Angle Visualizer ====
