@@ -11,7 +11,7 @@ Ce fichier contient la classe Enemy pour la gestion des ennemis.
 
 # ==== Enemy ====
 class Enemy(pg.sprite.Sprite):
-    PATH_RECALC_INTERVAL = 20   # frames entre deux recalculs
+    PATH_RECALC_INTERVAL = 10   # frames entre deux recalculs
     PATH_GOAL_THRESHOLD  = 1    # cellules de tolérance avant de recalculer
 
     def __init__(self, game, x, y):
@@ -30,7 +30,7 @@ class Enemy(pg.sprite.Sprite):
         self.weapon = Weapon(self.game, self, "enemy_single", ammo_count=15)
         self.last_seen_player_time = 0
         self.time_to_forget_player = 7  # temps en secondes après lequel l'ennemi oublie le joueur
-        # self.path_timer = 0
+        self.path_timer = 0
         # self.last_goal = None
 
     def lose_health(self, amount):
@@ -67,11 +67,24 @@ class Enemy(pg.sprite.Sprite):
     #     self.last_goal = goal
     #     self.path_timer = 0
 
+    def refresh_path(self):
+        self.path_timer += 1
+
+        if self.path_timer >= self.PATH_RECALC_INTERVAL:
+            start = s.world_to_grid(self.feet.center)
+            goal = s.world_to_grid(self.game.player.feet.center)
+
+            self.path = self.game.pathfinding.find_path(start, goal)
+
+            self.path_timer = 0
+
     def move(self):
         # self.refresh_path()
-        start = s.world_to_grid(self.feet.center)
-        goal = s.world_to_grid(self.game.player.feet.center)
-        self.path = self.game.pathfinding.find_path(start, goal)
+        # start = s.world_to_grid(self.feet.center)
+        # goal = s.world_to_grid(self.game.player.feet.center)
+        # self.path = self.game.pathfinding.find_path(start, goal)
+
+        self.refresh_path()
 
         if not self.path:
             return

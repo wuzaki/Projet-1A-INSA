@@ -44,7 +44,7 @@ COOLDOWN = {
         "shotgun": {"cooldown": 0.5, "damage": 10},
         "raffle" : {"cooldown": 0, "damage": 5},
         "kniffe": {"cooldown": 0.2, "damage": 50},
-        "enemy_single": {"cooldown": 0.25, "damage": 25},
+        "enemy_single": {"cooldown": 0.25, "damage": 5},
         "enemy_shotgun": {"cooldown": 0.5, "damage": 10},
         "enemy_raffle" : {"cooldown": 0, "damage": 5}
 }
