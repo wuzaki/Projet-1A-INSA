@@ -37,7 +37,8 @@ class Player(pg.sprite.Sprite):
         if self.health <= 0:
             self.health = 0
             # self.kill()
-            return
+        elif self.health > 100:
+            self.health = 100
 
     def move(self):
         keys = pg.key.get_pressed()

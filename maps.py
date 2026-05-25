@@ -5,7 +5,7 @@ import pyscroll
 from dataclasses import dataclass
 import math
 
-from interactables import Interactable, Portal, Terminal, Ammo, Key
+from interactables import Interactable, Portal, Terminal, Ammo, Key, Health
 from enemy import Enemy
 
 """
@@ -64,6 +64,9 @@ class WorldGraph:
                 interactables.append(Ammo(self.game, obj.x, obj.y, obj.width, obj.height, count))
             elif obj.type == "key":
                 interactables.append(Key(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name))
+            elif obj.type == "health":
+                amount = obj.properties.get("amount", 25)
+                interactables.append(Health(self.game, obj.x, obj.y, obj.width, obj.height, amount))
             elif obj.type == "enemy":
                 enemies.append(Enemy(self.game, obj.x, obj.y))
 

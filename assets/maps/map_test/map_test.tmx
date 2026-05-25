@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="108">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="109">
  <tileset firstgid="1" source="nature.tsx"/>
  <layer id="1" name="floor" width="25" height="25">
   <data encoding="csv">
@@ -79,7 +79,7 @@
     <property name="access" value="false"/>
    </properties>
   </object>
-  <object id="17" type="ammo" x="448" y="128" width="32" height="32">
+  <object id="17" name="ammo" type="ammo" x="448" y="128" width="32" height="32">
    <properties>
     <property name="count" value="100"/>
    </properties>
@@ -94,5 +94,10 @@
    <point/>
   </object>
   <object id="104" name="term_01" type="key" x="288.609" y="191.747" width="31.3912" height="32.253"/>
+  <object id="108" name="health" type="health" x="64" y="288" width="32" height="32">
+   <properties>
+    <property name="amount" value="25"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
