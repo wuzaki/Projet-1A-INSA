@@ -15,6 +15,9 @@ class Game:
     def __init__(self, w, h):
         self.screen = pg.display.set_mode((w, h), pg.NOFRAME)
         self.dt = 1
+        pg.mouse.set_visible(False)
+        self.cursor_img = pg.image.load("assets/cursor.png").convert_alpha()
+        self.cursor_img = pg.transform.scale(self.cursor_img, (42, 42))
 
         # Classes
         self.player = Player(self, 0, 0)
@@ -29,6 +32,10 @@ class Game:
         self.world_graph.draw(self.screen)
         self.player.draw(self.screen)
         [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
+
+        # Curseur
+        mouse_pos = pg.mouse.get_pos()
+        self.screen.blit(self.cursor_img, self.cursor_img.get_rect(center=mouse_pos))
 
     def run(self):
         clock = pg.time.Clock()
