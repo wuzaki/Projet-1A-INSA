@@ -35,6 +35,11 @@ class Game:
         self.player.draw(self.screen)
         [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
 
+        s.show_basic_text(self.screen, "Move : QSDZ", (10, 120))
+        s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
+        s.show_basic_text(self.screen, "Terminal : A", (10, 160))
+        s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
+
         # Curseur
         mouse_pos = pg.mouse.get_pos()
         self.screen.blit(self.cursor_img, self.cursor_img.get_rect(center=mouse_pos))
