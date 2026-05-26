@@ -16,7 +16,8 @@ class Weapon:
         self.last_shot_time = 0
         self.mode = mode  # ou "single" ou "shotgun"
         self.ammo_count = ammo_count  # pour les armes à munitions limitées
-        self.max_ammo = s.WEAPONS_DATA.get(mode, {"max_ammo": 10})["max_ammo"]  # pour les armes à munitions limitées
+        self.stock_ammo = 0 # s.WEAPONS_DATA.get(mode, {"max_ammo": 10})["max_ammo"]  # pour les armes à munitions limitées
+        self.max_ammo = s.WEAPONS_DATA.get(mode, {"max_ammo": 10})["max_ammo"]
 
         # === ShotGun Specific ===
         self.pellets = 5
@@ -24,6 +25,19 @@ class Weapon:
 
     def can_shoot(self):
         return t.time() - self.last_shot_time >= self.cooldown and self.ammo_count > 0
+    
+    def reload_ammo(self):
+        if self.ammo_count >= self.max_ammo:
+            return  # chargeur déjà plein
+
+        if self.stock_ammo <= 0:
+            return  # plus de munitions en réserve
+
+        needed = self.max_ammo - self.ammo_count
+        to_reload = min(needed, self.stock_ammo)
+
+        self.ammo_count += to_reload
+        self.stock_ammo -= to_reload
 
     def shoot(self):
         if not self.can_shoot():

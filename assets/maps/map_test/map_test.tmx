@@ -106,7 +106,7 @@
   </object>
   <object id="110" name="single" type="weapon" x="224" y="416" width="32" height="32">
    <properties>
-    <property name="init_ammo" value="100"/>
+    <property name="init_ammo" value="32"/>
    </properties>
   </object>
  </objectgroup>

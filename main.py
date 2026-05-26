@@ -35,10 +35,10 @@ class Game:
         self.player.draw(self.screen)
         [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
 
-        s.show_basic_text(self.screen, "Move : QSDZ", (10, 120))
-        s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
-        s.show_basic_text(self.screen, "Terminal : A", (10, 160))
-        s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
+        # s.show_basic_text(self.screen, "Move : QSDZ", (10, 120))
+        # s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
+        # s.show_basic_text(self.screen, "Terminal : A", (10, 160))
+        # s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
 
         # Curseur
         mouse_pos = pg.mouse.get_pos()
@@ -57,6 +57,8 @@ class Game:
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     if event.button == 1:  # clic gauche
                         self.player.weapon.shoot()
+                    elif event.button == 3:  # clic droit
+                        self.player.weapon.reload_ammo()
                 
                 # Switch d'armes
                 elif event.type == pg.MOUSEWHEEL:
