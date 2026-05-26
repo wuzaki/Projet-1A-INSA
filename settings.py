@@ -40,13 +40,13 @@ ENEMY_COLOR_HEALTH_BAR = (204, 29, 29)
 
 # ==== Weapon Constants ====
 COOLDOWN = {
-        "single": {"cooldown": 0.1, "damage": 25},
-        "shotgun": {"cooldown": 0.5, "damage": 10},
-        "raffle" : {"cooldown": 0, "damage": 5},
-        "kniffe": {"cooldown": 0.2, "damage": 50},
-        "enemy_single": {"cooldown": 0.25, "damage": 5},
-        "enemy_shotgun": {"cooldown": 0.5, "damage": 10},
-        "enemy_raffle" : {"cooldown": 0, "damage": 5}
+        "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 100},
+        "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50},
+        "raffle" : {"cooldown": 0, "damage": 5, "max_ammo": 20},
+        "kniffe": {"cooldown": 0.2, "damage": 50, "max_ammo": 0},
+        "enemy_single": {"cooldown": 0.25, "damage": 5, "max_ammo": None},
+        "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
+        "enemy_raffle" : {"cooldown": 0, "damage": 5, "max_ammo": None}
 }
 
 def show_basic_text(screen, text, pos):

@@ -125,6 +125,9 @@ class Player(AnimateSprite):
         return start_screen, end_screen
 
     def update(self):
+        if self.weapon.ammo_count >= self.weapon.max_ammo:
+            self.weapon.ammo_count = self.weapon.max_ammo # éviter de dépasser le max
+
         self.move()
         self.sync_rects()
         # self.switch_animation("down")
@@ -139,7 +142,7 @@ class Player(AnimateSprite):
         s.show_basic_text(screen, f"Health: {self.health}", (10, 40))
 
     def show_ammo_count(self, screen):
-        s.show_basic_text(screen, f"Ammo: {self.weapon.ammo_count}", (10, 60))
+        s.show_basic_text(screen, f"Ammo: {self.weapon.ammo_count}/{self.weapon.max_ammo}", (10, 60))
 
     def show_weapon_mode(self, screen):
         s.show_basic_text(screen, f"Mode: {self.weapon.mode}", (10, 80))

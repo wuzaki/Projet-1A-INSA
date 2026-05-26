@@ -17,7 +17,7 @@ class Ammo(Interactable):
         self.image = self.load_image("assets/interactables/ammo.png")
 
     def update(self):
-        if self.rect.colliderect(self.game.player.feet):
+        if self.rect.colliderect(self.game.player.feet) and self.game.player.weapon.ammo_count < self.game.player.weapon.max_ammo:
             # print("Ammo collected!")
             self.game.player.weapon.ammo_count += self.count  # ou une autre quantité selon le type de munition
             self.kill()

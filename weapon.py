@@ -16,6 +16,7 @@ class Weapon:
         self.last_shot_time = 0
         self.mode = mode  # ou "single" ou "shotgun"
         self.ammo_count = ammo_count  # pour les armes à munitions limitées
+        self.max_ammo = s.COOLDOWN.get(mode, {"max_ammo": 10})["max_ammo"]  # pour les armes à munitions limitées
 
         # === ShotGun Specific ===
         self.pellets = 5
@@ -25,6 +26,7 @@ class Weapon:
         return t.time() - self.last_shot_time >= self.cooldown and self.ammo_count > 0
 
     def shoot(self):
+
         if not self.can_shoot():
             return
         
