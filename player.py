@@ -137,13 +137,16 @@ class Player(AnimateSprite):
         self.show_weapon_mode(screen)
 
     def show_health(self, screen):
-        s.show_basic_text(screen, f"Health: {self.health}", (10, 40))
+        temp = s.get_text_surf(f"Health: {self.health}")
+        s.show_basic_text(screen, temp, (10, 40))
 
     def show_ammo_count(self, screen):
-        s.show_basic_text(screen, f"Ammo: {self.weapon.ammo_count}/{self.weapon.stock_ammo}", (10, 60))
+        temp = s.get_text_surf(f"Ammo: {self.weapon.ammo_count}/{self.weapon.stock_ammo}")
+        s.show_basic_text(screen, temp, (10, 60))
 
     def show_weapon_mode(self, screen):
-        s.show_basic_text(screen, f"Mode: {self.weapon.mode}", (10, 80))
+        temp = s.get_text_surf(f"Mode: {self.weapon.mode}")
+        s.show_basic_text(screen, temp, (10, 80))
 
     def show_angle(self, screen):
         # ==== Angle Visualizer ====

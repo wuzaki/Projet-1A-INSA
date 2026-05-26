@@ -38,6 +38,7 @@ class Enemy(AnimateSprite):
     def lose_health(self, amount):
         self.health -= amount
         if self.health <= 0:
+            self.game.world_graph.get_enemies().remove(self)
             self.kill()
 
     def load_image(self, path):
@@ -118,19 +119,6 @@ class Enemy(AnimateSprite):
 
         move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
         self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
-
-        def get_direction_from_angle(self, angle):
-            if angle >= -math.pi / 4 and angle < math.pi / 4:
-                return "right"
-            elif angle >= math.pi / 4 and angle < 3 * math.pi / 4:
-                return "down"
-            elif angle >= 3 * math.pi / 4 or angle < -3 * math.pi / 4:
-                return "left"
-            else:
-                return "up"
-
-        def get_angle_for_direction(self, direction):
-            return {"right": 0, "down": math.pi / 2, "left": math.pi, "up": -math.pi / 2}[direction]
 
     def reload_ammo(self):
         if t.time() - self.weapon.last_shot_time >= 3:  # délai de rechargement

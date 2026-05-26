@@ -2,6 +2,7 @@ import pygame as pg
 import math
 
 pg.init()
+pg.font.init()
 
 # ==== App Settings ====
 WIDTH, HEIGHT = pg.display.Info().current_w, pg.display.Info().current_h
@@ -47,10 +48,12 @@ WEAPONS_DATA = {
         "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
 }
 
-def show_basic_text(screen, text, pos):
-     font = pg.font.SysFont("Raleway", 28)
-     text_surface = font.render(text, True, (255, 255, 255))
-     screen.blit(text_surface, pos)
+def get_text_surf(text):
+    font = pg.font.SysFont("Raleway", 28)
+    return font.render(text, True, (255, 255, 255))
+
+def show_basic_text(screen, surf, pos):
+     screen.blit(surf, pos)
 
 def show_fps(screen, clock):
     font = pg.font.SysFont("Raleway", 28)

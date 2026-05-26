@@ -19,11 +19,19 @@ class Game:
         self.cursor_img = pg.image.load("assets/cursor.png").convert_alpha()
         self.cursor_img = pg.transform.scale(self.cursor_img, (42, 42))
 
+        # Textes
+        self.keys_info_move_text = s.get_text_surf("Move : QSDZ")
+        self.keys_info_shoot_text = s.get_text_surf("Shoot : Right Click")
+        self.keys_info_term_text = s.get_text_surf("Terminal : A")
+        self.keys_info_weapons_text = s.get_text_surf("Switch Weapons : Molette")
+        # s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
+        # s.show_basic_text(self.screen, "Terminal : A", (10, 160))
+        # s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
+
         # Classes
         self.player = Player(self, 0, 0)
         self.weapon_zone = WeaponZone(self, self.player.weapon.mode)
         self.world_graph = WorldGraph(self)
-
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
 
     def process(self):
@@ -35,10 +43,10 @@ class Game:
         self.player.draw(self.screen)
         [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
 
-        # s.show_basic_text(self.screen, "Move : QSDZ", (10, 120))
-        # s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
-        # s.show_basic_text(self.screen, "Terminal : A", (10, 160))
-        # s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
+        s.show_basic_text(self.screen, self.keys_info_move_text, (10, 120))
+        s.show_basic_text(self.screen, self.keys_info_shoot_text, (10, 140))
+        s.show_basic_text(self.screen, self.keys_info_term_text, (10, 160))
+        s.show_basic_text(self.screen, self.keys_info_weapons_text, (10, 180))
 
         # Curseur
         mouse_pos = pg.mouse.get_pos()
