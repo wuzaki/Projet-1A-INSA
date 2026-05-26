@@ -179,8 +179,6 @@ class WeaponZone(pg.sprite.Sprite):
         self.image = self.original_image
         self.rect = self.image.get_rect()
 
-        self.game.world_graph.get_group().add(self)
-
     def load_images(self, path):
         img_list = dict()
         for name in s.WEAPONS_DATA.keys():

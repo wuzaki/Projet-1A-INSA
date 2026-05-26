@@ -21,8 +21,8 @@ class Game:
 
         # Classes
         self.player = Player(self, 0, 0)
-        self.world_graph = WorldGraph(self)
         self.weapon_zone = WeaponZone(self, self.player.weapon.mode)
+        self.world_graph = WorldGraph(self)
 
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
 

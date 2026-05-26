@@ -83,6 +83,7 @@ class WorldGraph:
 
         # Player doit être ajouté après les ennemis pour être au-dessus d'eux
         group.add(self.player)
+        group.add(self.game.weapon_zone)
 
         self.maps[name] = Map(name, tmx_data, group, walls, interactables, enemies)
         self.tile_maps[name] = self.generate_tile_map(tmx_data, tmx_data.width * tmx_data.tilewidth, tmx_data.height * tmx_data.tileheight)
