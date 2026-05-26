@@ -170,7 +170,7 @@ class WeaponZone(pg.sprite.Sprite):
     def __init__(self, game, mode):
         super().__init__()
         self.game = game
-        self._layer = 9
+        self._layer = 8
         self.mode = mode
 
         self.img_list = self.load_images("assets/weapon_zone")

@@ -34,7 +34,7 @@ class Weapon:
             for enemy in self.game.world_graph.get_enemies():
                 hitbox = enemy.rect.inflate(20, 20)
                 if self.owner.rect.colliderect(hitbox):
-                    enemy.lose_health(s.COOLDOWN.get(self.mode, {"damage": 50})["damage"])
+                    enemy.lose_health(s.WEAPONS_DATA.get(self.mode, {"damage": 50})["damage"])
         
         elif self.mode in ["single", "enemy_single"]:
             projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 25})["damage"])
