@@ -34,7 +34,8 @@ class Player(AnimateSprite):
 
         # ==== Health and Weapon ====
         self.health = 100
-        self.weapon = Weapon(self.game, self, "single", ammo_count=100)
+        self.weapon_list = [Weapon(self.game, self, "knife")]
+        self.weapon = self.weapon_list[0]
 
     def lose_health(self, amount):
         self.health -= amount
@@ -169,16 +170,29 @@ class WeaponZone(pg.sprite.Sprite):
     def __init__(self, game, mode):
         super().__init__()
         self.game = game
-        self._layer = 8
+        self._layer = 9
         self.mode = mode
 
-        self.original_image = pg.image.load(f"assets/zone_{self.mode}.png").convert_alpha()
-        self.original_image.set_alpha(150)
+        self.img_list = self.load_images("assets/weapon_zone")
+        self.original_image = self.img_list[self.mode] # pg.image.load(f"assets/zone_{self.mode}.png").convert_alpha()
+        # self.original_image.set_alpha(150)
         self.image = self.original_image
         self.rect = self.image.get_rect()
 
+        self.game.world_graph.get_group().add(self)
+
+    def load_images(self, path):
+        img_list = dict()
+        for name in s.WEAPONS_DATA.keys():
+            if "enemy" not in name:
+                img = pg.image.load(f"{path}/zone_{name}.png").convert_alpha()
+                img_list[name] = img
+        return img_list
+
     def update(self):
         angle = self.game.player.angle
+
+        self.original_image = self.img_list[self.game.player.weapon.mode]
         
         # Le bord gauche de l'image originale = origine du joueur
         # On calcule où se trouve le centre de l'image après rotation
@@ -192,4 +206,6 @@ class WeaponZone(pg.sprite.Sprite):
                 self.game.player.rect.centery + offset.y  
             ))
         else:
+            self.image = self.img_list["knife"]  # <-- manquant
+            self.rect = self.image.get_rect(center=self.game.player.feet.midtop)
             self.rect.center = self.game.player.feet.midtop

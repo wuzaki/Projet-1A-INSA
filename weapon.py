@@ -12,11 +12,11 @@ class Weapon:
     def __init__(self, game, owner, mode, ammo_count=10):
         self.game = game
         self.owner = owner
-        self.cooldown = s.COOLDOWN.get(mode, {"cooldown": 0.5})["cooldown"]  # secondes entre deux tirs
+        self.cooldown = s.WEAPONS_DATA.get(mode, {"cooldown": 0.5})["cooldown"]  # secondes entre deux tirs
         self.last_shot_time = 0
         self.mode = mode  # ou "single" ou "shotgun"
         self.ammo_count = ammo_count  # pour les armes à munitions limitées
-        self.max_ammo = s.COOLDOWN.get(mode, {"max_ammo": 10})["max_ammo"]  # pour les armes à munitions limitées
+        self.max_ammo = s.WEAPONS_DATA.get(mode, {"max_ammo": 10})["max_ammo"]  # pour les armes à munitions limitées
 
         # === ShotGun Specific ===
         self.pellets = 5
@@ -37,19 +37,23 @@ class Weapon:
                     enemy.lose_health(s.COOLDOWN.get(self.mode, {"damage": 50})["damage"])
         
         elif self.mode in ["single", "enemy_single"]:
-            projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle, damage=s.COOLDOWN.get(self.mode, {"damage": 25})["damage"])
+            projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 25})["damage"])
             self.game.world_graph.get_group().add(projectile)
 
         elif self.mode in ["shotgun", "enemy_shotgun"]:
             for i in range(self.pellets):
                 angle = self.owner.angle + (i - (self.pellets - 1) / 2) * self.spread_angle
-                projectile = Projectile(self.game, self.owner, self.owner.rect.center, angle, damage=s.COOLDOWN.get(self.mode, {"damage": 10})["damage"])
+                projectile = Projectile(self.game, self.owner, self.owner.rect.center, angle, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 10})["damage"])
                 self.game.world_graph.get_group().add(projectile)
 
         self.last_shot_time = t.time()
 
+        # Loss Ammo Player
         if self.mode != "knife":
-            self.ammo_count -= 1
+            if self.mode == "shotgun":
+                self.ammo_count -= self.pellets
+            else:
+                self.ammo_count -= 1
 
 
 # ==== Projectiles =====

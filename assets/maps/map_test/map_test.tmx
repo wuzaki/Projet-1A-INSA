@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="109">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="111">
  <tileset firstgid="1" source="nature.tsx"/>
  <layer id="1" name="floor" width="25" height="25">
   <data encoding="csv">
@@ -97,6 +97,16 @@
   <object id="108" name="health" type="health" x="64" y="288" width="32" height="32">
    <properties>
     <property name="amount" value="25"/>
+   </properties>
+  </object>
+  <object id="109" name="shotgun" type="weapon" x="96" y="448" width="32" height="32">
+   <properties>
+    <property name="init_ammo" value="50"/>
+   </properties>
+  </object>
+  <object id="110" name="single" type="weapon" x="224" y="416" width="32" height="32">
+   <properties>
+    <property name="init_ammo" value="100"/>
    </properties>
   </object>
  </objectgroup>

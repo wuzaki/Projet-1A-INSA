@@ -2,7 +2,7 @@ import settings as s
 import pygame as pg
 
 from maps import WorldGraph
-from player import Player
+from player import Player, WeaponZone
 
 from pathfinding import PathFinding
 
@@ -22,6 +22,7 @@ class Game:
         # Classes
         self.player = Player(self, 0, 0)
         self.world_graph = WorldGraph(self)
+        self.weapon_zone = WeaponZone(self, self.player.weapon.mode)
 
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
 
@@ -51,6 +52,12 @@ class Game:
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     if event.button == 1:  # clic gauche
                         self.player.weapon.shoot()
+                
+                # Switch d'armes
+                elif event.type == pg.MOUSEWHEEL:
+                    idx = self.player.weapon_list.index(self.player.weapon)
+                    idx = (idx + event.y) % len(self.player.weapon_list)
+                    self.player.weapon = self.player.weapon_list[idx]
                     
             # ==== Update ====
             self.dt = min(clock.tick(s.FPS) / 1000, 0.05)

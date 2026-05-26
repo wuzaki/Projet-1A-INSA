@@ -5,7 +5,7 @@ import pyscroll
 from dataclasses import dataclass
 import math
 
-from interactables import Interactable, Portal, Terminal, Ammo, Key, Health
+from interactables import Interactable, Portal, Terminal, Ammo, Key, Health, WeaponBox
 from enemy import Enemy
 from player import WeaponZone
 
@@ -68,6 +68,9 @@ class WorldGraph:
             elif obj.type == "health":
                 amount = obj.properties.get("amount", 25)
                 interactables.append(Health(self.game, obj.x, obj.y, obj.width, obj.height, amount))
+            elif obj.type == "weapon":
+                init_ammo = obj.properties.get("init_ammo", 0)
+                interactables.append(WeaponBox(self.game, obj.x, obj.y, obj.width, obj.height, init_ammo, obj.name))
             elif obj.type == "enemy":
                 enemies.append(Enemy(self.game, obj.x, obj.y))
 
@@ -79,7 +82,6 @@ class WorldGraph:
         [group.add(enemy) for enemy in enemies]
 
         # Player doit être ajouté après les ennemis pour être au-dessus d'eux
-        group.add(WeaponZone(self.game, self.player.weapon.mode)) # Angle Visualizer
         group.add(self.player)
 
         self.maps[name] = Map(name, tmx_data, group, walls, interactables, enemies)

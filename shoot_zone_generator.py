@@ -12,7 +12,7 @@ def create_shoot_zones(tile_size=32):
 
     # SINGLE
     # Rectangle fin (hauteur = 0.6 tile) et long (5 tiles)
-    W, H = tile_size * 2, int(tile_size * 0.6)
+    W, H = tile_size * 2, int(tile_size * 0.4)
     surf = pg.Surface((W, H), pg.SRCALPHA)
 
     for x in range(W):
