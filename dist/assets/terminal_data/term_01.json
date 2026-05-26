@@ -1,0 +1,42 @@
+{
+    "name": "term_01",
+    "root": {
+        "text": "Bienvenue dans le terminal sécurisé.\nChoisissez une option :",
+        "options": [
+            {"label": "Accéder au journal des opérations", "target": "journal_ops"},
+            {"label": "Accéder aux fichiers utilisateurs", "target": "fichiers_users"},
+            {"label": "Activer le portail", "target": "activate_portal"},
+            {"label": "Éteindre le terminal", "target": "shutdown"}
+        ]
+    },
+    "journal_ops": {
+        "text": "Journal des opérations :\n1. Mission Alpha terminée\n2. Mission Beta en cours",
+        "options": [
+            {"label": "Retour au menu principal", "target": "root"}
+        ]
+    },
+    "fichiers_users": {
+        "text": "Liste des utilisateurs :\n- Alice\n- Bob\n- Charlie",
+        "options": [
+            {"label": "Voir le profil d'Alice", "target": "alice_profile"},
+            {"label": "Retour au menu principal", "target": "root"}
+        ]
+    },
+    "alice_profile": {
+        "text": "Profil d'Alice :\n- Rôle : Technicien\n- Dernière connexion : 01/04/2026",
+        "options": [
+            {"label": "Retour à la liste des utilisateurs", "target": "fichiers_users"}
+        ]
+    },
+    "activate_portal": {
+        "text": "Portail activé.",
+        "portal_name": "world1",
+        "options": [
+            {"label": "Retour au menu principal", "target": "root"}
+        ]
+    },
+    "shutdown": {
+        "text": "Le terminal va s'éteindre. Fin de session.",
+        "options": []
+    }
+}
