@@ -22,6 +22,7 @@ class Game:
         # Classes
         self.player = Player(self, 0, 0)
         self.world_graph = WorldGraph(self)
+
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
 
     def process(self):

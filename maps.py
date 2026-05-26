@@ -7,6 +7,7 @@ import math
 
 from interactables import Interactable, Portal, Terminal, Ammo, Key, Health
 from enemy import Enemy
+from player import WeaponZone
 
 """
 Ce fichier contient la classe WorldGraph, pour la gestion des maps et de leurs objets.
@@ -76,6 +77,9 @@ class WorldGraph:
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=default_layer, sort=True)
         [group.add(interactable) for interactable in interactables]
         [group.add(enemy) for enemy in enemies]
+
+        # Player doit être ajouté après les ennemis pour être au-dessus d'eux
+        group.add(WeaponZone(self.game, self.player.weapon.mode)) # Angle Visualizer
         group.add(self.player)
 
         self.maps[name] = Map(name, tmx_data, group, walls, interactables, enemies)

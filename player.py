@@ -133,7 +133,7 @@ class Player(AnimateSprite):
         # self.switch_animation("down")
 
     def draw(self, screen):
-        self.show_angle(screen)
+        # self.show_angle(screen)
         self.show_health(screen)
         self.show_ammo_count(screen)
         self.show_weapon_mode(screen)
@@ -162,3 +162,34 @@ class Player(AnimateSprite):
         end_screen = cam.translate_point(end_world)
 
         pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
+
+    
+# ==== WeaponZone ====
+class WeaponZone(pg.sprite.Sprite):
+    def __init__(self, game, mode):
+        super().__init__()
+        self.game = game
+        self._layer = 8
+        self.mode = mode
+
+        self.original_image = pg.image.load(f"assets/zone_{self.mode}.png").convert_alpha()
+        self.original_image.set_alpha(150)
+        self.image = self.original_image
+        self.rect = self.image.get_rect()
+
+    def update(self):
+        angle = self.game.player.angle
+        
+        # Le bord gauche de l'image originale = origine du joueur
+        # On calcule où se trouve le centre de l'image après rotation
+        if self.game.player.weapon.mode != "knife":
+            self.image = pg.transform.rotozoom(self.original_image, -math.degrees(angle), 1)
+            w = self.original_image.get_width()
+            offset = pg.math.Vector2(w // 2, 0).rotate(math.degrees(angle))
+            
+            self.rect = self.image.get_rect(center=(
+                self.game.player.rect.centerx + offset.x,
+                self.game.player.rect.centery + offset.y  
+            ))
+        else:
+            self.rect.center = self.game.player.feet.midtop

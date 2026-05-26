@@ -20,17 +20,16 @@ class Weapon:
 
         # === ShotGun Specific ===
         self.pellets = 5
-        self.spread_angle = math.radians(5)  # écart total entre les pellets
+        self.spread_angle = math.radians(10)  # écart total entre les pellets
 
     def can_shoot(self):
         return t.time() - self.last_shot_time >= self.cooldown and self.ammo_count > 0
 
     def shoot(self):
-
         if not self.can_shoot():
             return
         
-        if self.mode == "kniffe":
+        if self.mode == "knife":
             # Attaque de mêlée : on vérifie les ennemis proches
             for enemy in self.game.world_graph.get_enemies():
                 hitbox = enemy.rect.inflate(20, 20)
@@ -49,7 +48,7 @@ class Weapon:
 
         self.last_shot_time = t.time()
 
-        if self.mode != "kniffe":
+        if self.mode != "knife":
             self.ammo_count -= 1
 
 

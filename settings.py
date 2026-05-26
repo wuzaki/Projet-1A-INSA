@@ -43,7 +43,7 @@ COOLDOWN = {
         "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 100},
         "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50},
         "raffle" : {"cooldown": 0, "damage": 5, "max_ammo": 20},
-        "kniffe": {"cooldown": 0.2, "damage": 50, "max_ammo": 0},
+        "knife": {"cooldown": 0.2, "damage": 50, "max_ammo": 9999},
         "enemy_single": {"cooldown": 0.25, "damage": 5, "max_ammo": None},
         "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
         "enemy_raffle" : {"cooldown": 0, "damage": 5, "max_ammo": None}
