@@ -13,7 +13,7 @@ Ce fichier contient la classe Player pour la gestion du personnage du joueur.
 # ==== Player ====
 class Player(AnimateSprite):
     def __init__(self, game, x, y):
-        super().__init__("assets/player.png")
+        super().__init__("assets/pixil-frame-0.png")
         self.game = game
         self._layer = 12  # plus petit que le joueur
 
