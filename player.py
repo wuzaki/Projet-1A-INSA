@@ -136,6 +136,9 @@ class Player(AnimateSprite):
         self.show_ammo_count(screen)
         self.show_weapon_mode(screen)
 
+        if not self.weapon.can_shoot() and self.weapon.ammo_count > 0:
+            self.show_reload_weapon_timer(screen)
+
     def show_health(self, screen):
         temp = s.get_text_surf(f"Health: {self.health}")
         s.show_basic_text(screen, temp, (10, 40))
@@ -163,6 +166,19 @@ class Player(AnimateSprite):
         end_screen = cam.translate_point(end_world)
 
         pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
+
+    def show_reload_weapon_timer(self, screen):
+        zoom = self.game.world_graph.get_group()._map_layer.zoom
+        bar_width = 13 * zoom
+        bar_height = 3 * zoom
+        rect = pg.Rect(0, 0, bar_width, bar_height)
+
+        cam = self.game.world_graph.get_group()._map_layer
+        rect.center = cam.translate_point((self.rect.centerx, self.rect.centery - 20))
+
+        pg.draw.rect(screen, (0, 0, 0), rect)
+        pg.draw.rect(screen, s.PLAYER_COLOR_RELOAD_BAR, (rect.x, rect.y, rect.width * (((t.time() - self.weapon.last_shot_time) % self.weapon.cooldown) / self.weapon.cooldown), rect.height))
+        # pg.draw.rect(screen, (255, 255, 255), rect, 1)
 
     
 # ==== WeaponZone ====
