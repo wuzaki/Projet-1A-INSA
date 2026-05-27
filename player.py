@@ -184,6 +184,10 @@ class WeaponZone(pg.sprite.Sprite):
         for name in s.WEAPONS_DATA.keys():
             if "enemy" not in name:
                 img = pg.image.load(f"{path}/zone_{name}.png").convert_alpha()
+                w, h = img.get_size()
+                ratio = w/h
+                scale = ratio/32
+                img = pg.transform.smoothscale(img, (w * scale, h * scale))
                 img_list[name] = img
         return img_list
 

@@ -105,10 +105,10 @@ def create_shoot_zones(tile_size=32):
 screen = pg.display.set_mode((800, 600))
 shoot_zones = create_shoot_zones()
 
-zones = create_shoot_zones(tile_size=16)
+zones = create_shoot_zones(tile_size=480)
 
 for name, surf in zones.items():
-    pg.image.save(surf, f"assets/zone_{name}.png")
+    pg.image.save(surf, f"assets/weapon_zone/zone_{name}.png")
 
 while True:
     for event in pg.event.get():

@@ -105,7 +105,12 @@ class Projectile(pg.sprite.Sprite):
         if isinstance(self.owner, self.game.player.__class__):
             # Le joueur tire → on touche les ennemis
             for enemy in self.game.world_graph.get_enemies():
-                if self.rect.colliderect(enemy.rect):
+                if self.game.player.mode != "knife":
+                    hitbox = enemy.rect
+                else:
+                    hitbox = enemy.feet # Collision restreinte pour plus de réaliste
+
+                if self.rect.colliderect(hitbox):
                     enemy.lose_health(self.damage)
                     self.kill()
                     return
