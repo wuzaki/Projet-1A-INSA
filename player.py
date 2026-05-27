@@ -170,7 +170,7 @@ class WeaponZone(pg.sprite.Sprite):
     def __init__(self, game, mode):
         super().__init__()
         self.game = game
-        self._layer = 8
+        self._layer = 0
         self.mode = mode
 
         self.img_list = self.load_images("assets/weapon_zone")
@@ -186,7 +186,7 @@ class WeaponZone(pg.sprite.Sprite):
                 img = pg.image.load(f"{path}/zone_{name}.png").convert_alpha()
                 w, h = img.get_size()
                 ratio = w/h
-                scale = ratio/32
+                scale = ratio/24
                 img = pg.transform.smoothscale(img, (w * scale, h * scale))
                 img_list[name] = img
         return img_list
