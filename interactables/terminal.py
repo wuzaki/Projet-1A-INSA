@@ -1,6 +1,6 @@
 import settings as s
 from .base import Interactable
-from terminal_ui import TerminalUI
+from utils.terminal_ui import TerminalUI
 import pygame as pg
 import json
 

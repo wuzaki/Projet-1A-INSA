@@ -4,7 +4,8 @@ import math
 import time as t
 
 from weapon import Weapon
-from animation import AnimateSprite
+from utils.animation import AnimateSprite
+from utils.shadow import Shadow
 
 """
 Ce fichier contient la classe Enemy pour la gestion des ennemis.
@@ -35,9 +36,17 @@ class Enemy(AnimateSprite):
         self.path_timer = 0
         # self.last_goal = None
 
+        # ==== Add Shadow ====
+        self.shadow = Shadow(self.game, self, width=20, height=6)
+
     def lose_health(self, amount):
         self.health -= amount
         if self.health <= 0:
+            # Shadow
+            self.game.world_graph.get_group().remove(self.shadow)
+            self.shadow.kill()
+                    
+            # Enemy
             self.game.world_graph.get_enemies().remove(self)
             self.kill()
 

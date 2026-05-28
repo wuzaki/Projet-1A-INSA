@@ -2,9 +2,10 @@ import settings as s
 import pygame as pg
 
 from maps import WorldGraph
-from player import Player, WeaponZone
+from player import Player
+from utils.weapon_zone import WeaponZone
 from pathfinding import PathFinding
-from hud import PlayerHUD
+from utils.hud import PlayerHUD
 
 """
 Ce fichier contient la classe Game pour la gestion principale du jeu.
@@ -19,18 +20,8 @@ class Game:
         self.cursor_img = pg.image.load("assets/cursor.png").convert_alpha()
         self.cursor_img = pg.transform.scale(self.cursor_img, (42, 42))
 
-        # Textes
-        # self.keys_info_move_text = s.get_text_surf("Move : QSDZ")
-        # self.keys_info_shoot_text = s.get_text_surf("Shoot : Right Click")
-        # self.keys_info_term_text = s.get_text_surf("Terminal : A")
-        # self.keys_info_weapons_text = s.get_text_surf("Switch Weapons : Molette")
-        # s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
-        # s.show_basic_text(self.screen, "Terminal : A", (10, 160))
-        # s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
-
         # Classes
         self.player = Player(self, 0, 0)
-        self.weapon_zone = WeaponZone(self, self.player.weapon.mode)
         self.world_graph = WorldGraph(self)
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
 
