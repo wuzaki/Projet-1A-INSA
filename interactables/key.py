@@ -4,6 +4,8 @@ import pygame as pg
 from .portal import Portal
 from .terminal import Terminal
 
+from utils.shadow import Shadow
+
 """
 Ce fichier contient la classe Key, pour les clés.
 """
@@ -23,6 +25,9 @@ class Key(Interactable):
         # ==== Sprite ====
         self.image = self.load_image("assets/interactables/key.png")
 
+        # ==== Add Shadow ====
+        self.shadow = Shadow(self.game, self, width=18, height=6)
+
     def get_connected_item(self):
         # print(self.game)
         for item in self.game.world_graph.get_interactables():
@@ -39,3 +44,7 @@ class Key(Interactable):
             self.connected_item.get_access()  # Donne l'accès à l'item connecté (ex: ouvre un portail)
             self.game.world_graph.get_group().remove(self)
             self.kill()
+
+            # Shadow
+            self.shadow.kill()
+            self.game.world_graph.get_group().remove(self.shadow)

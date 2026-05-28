@@ -1,6 +1,7 @@
 import settings as s
 from .base import Interactable
 from utils.terminal_ui import TerminalUI
+from utils.shadow import Shadow
 import pygame as pg
 import json
 
@@ -16,6 +17,9 @@ class Terminal(Interactable):
 
         self.ui = None
         self.active = False
+
+        # ==== Add Shadow ====
+        self.shadow = Shadow(self.game, self, 40, 3)
 
     def load_data(self):
         try:

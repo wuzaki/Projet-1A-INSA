@@ -81,7 +81,7 @@ class Projectile(pg.sprite.Sprite):
 
         self.xy = pg.math.Vector2(pos)
         self.angle = angle
-        self.speed = 400
+        self.speed = 600
 
         self.image = pg.Surface((8, 4), pg.SRCALPHA)
         pg.draw.rect(self.image, (255, 255, 0), (0, 0, 8, 4))
