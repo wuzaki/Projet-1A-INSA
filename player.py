@@ -134,7 +134,7 @@ class Player(AnimateSprite):
     def update(self):
         self.move()
         self.sync_rects()
-        self.shadow.update()
+        self.shadow.sync_rects()
         # self.switch_animation("down")
 
     def draw(self, screen):

@@ -2,8 +2,6 @@ import settings as s
 from .base import Interactable
 import pygame as pg
 
-from utils.shadow import Shadow
-
 """
 Ce fichier contient la classe Health, pour la santé.
 """
@@ -18,10 +16,9 @@ class Health(Interactable):
         # ==== Sprite ====
         self.image = self.load_image("assets/interactables/health.png")
 
-        # ==== Add Shadow ====
-        self.shadow = Shadow(self.game, self, width=20, height=6)
-
     def update(self):
+        self.shadow.sync_rects()
+
         if self.rect.colliderect(self.game.player.feet):
             # print("Health collected!")
             self.game.player.lose_health(-self.amount)  # ou une autre quantité selon le type de munition

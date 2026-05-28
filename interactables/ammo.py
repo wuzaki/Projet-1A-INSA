@@ -17,9 +17,15 @@ class Ammo(Interactable):
         self.image = self.load_image("assets/interactables/ammo.png")
 
     def update(self):
+        self.shadow.sync_rects()
+
         if self.rect.colliderect(self.game.player.feet):
             # print("Ammo collected!")
             if self.game.player.weapon.mode != "knife":
                 self.game.player.weapon.stock_ammo += self.count  # ou une autre quantité selon le type de munition
                 self.kill()
                 self.game.world_graph.get_group().remove(self)
+
+                # Shadow
+                self.shadow.kill()
+                self.game.world_graph.get_group().remove(self.shadow)

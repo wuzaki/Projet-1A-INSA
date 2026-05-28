@@ -185,6 +185,7 @@ class Enemy(AnimateSprite):
     def update(self):
         self.angle = s.get_angle(self.rect.center, self.game.player.rect.center)
         self.run_logic()
+        self.shadow.sync_rects()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom
 

@@ -13,6 +13,6 @@ class Shadow(pg.sprite.Sprite):
         pg.draw.ellipse(self.image, (0, 0, 0, 120), self.image.get_rect())
         self.rect = self.image.get_rect()
 
-    def update(self):
+    def sync_rects(self):
         # Suit les pieds du joueur
         self.rect.center = self.target.rect.midbottom

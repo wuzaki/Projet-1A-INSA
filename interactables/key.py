@@ -4,8 +4,6 @@ import pygame as pg
 from .portal import Portal
 from .terminal import Terminal
 
-from utils.shadow import Shadow
-
 """
 Ce fichier contient la classe Key, pour les clés.
 """
@@ -25,8 +23,8 @@ class Key(Interactable):
         # ==== Sprite ====
         self.image = self.load_image("assets/interactables/key.png")
 
-        # ==== Add Shadow ====
-        self.shadow = Shadow(self.game, self, width=18, height=6)
+        # ==== Init Shadow ====
+        self.shadow.__init__(self.game, self, width=18, height=6) # __init__ car pas les memes valeurs de width et height
 
     def get_connected_item(self):
         # print(self.game)
@@ -36,6 +34,8 @@ class Key(Interactable):
         return None
 
     def update(self):
+        self.shadow.sync_rects()
+        
         if self.connected_item is None:
             self.connected_item = self.get_connected_item()
 
