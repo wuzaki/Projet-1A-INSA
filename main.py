@@ -3,8 +3,8 @@ import pygame as pg
 
 from maps import WorldGraph
 from player import Player, WeaponZone
-
 from pathfinding import PathFinding
+from hud import PlayerHUD
 
 """
 Ce fichier contient la classe Game pour la gestion principale du jeu.
@@ -20,10 +20,10 @@ class Game:
         self.cursor_img = pg.transform.scale(self.cursor_img, (42, 42))
 
         # Textes
-        self.keys_info_move_text = s.get_text_surf("Move : QSDZ")
-        self.keys_info_shoot_text = s.get_text_surf("Shoot : Right Click")
-        self.keys_info_term_text = s.get_text_surf("Terminal : A")
-        self.keys_info_weapons_text = s.get_text_surf("Switch Weapons : Molette")
+        # self.keys_info_move_text = s.get_text_surf("Move : QSDZ")
+        # self.keys_info_shoot_text = s.get_text_surf("Shoot : Right Click")
+        # self.keys_info_term_text = s.get_text_surf("Terminal : A")
+        # self.keys_info_weapons_text = s.get_text_surf("Switch Weapons : Molette")
         # s.show_basic_text(self.screen, "Shoot : Right Click", (10, 140))
         # s.show_basic_text(self.screen, "Terminal : A", (10, 160))
         # s.show_basic_text(self.screen, "Switch Weapons : Molette", (10, 180))
@@ -34,6 +34,8 @@ class Game:
         self.world_graph = WorldGraph(self)
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
 
+        self.hud = PlayerHUD(self)
+
     def process(self):
         self.screen.fill((0, 0, 0))
         self.world_graph.process()
@@ -43,14 +45,16 @@ class Game:
         self.player.draw(self.screen)
         [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
 
-        s.show_basic_text(self.screen, self.keys_info_move_text, (10, 120))
-        s.show_basic_text(self.screen, self.keys_info_shoot_text, (10, 140))
-        s.show_basic_text(self.screen, self.keys_info_term_text, (10, 160))
-        s.show_basic_text(self.screen, self.keys_info_weapons_text, (10, 180))
+        # s.show_basic_text(self.screen, self.keys_info_move_text, (10, 120))
+        # s.show_basic_text(self.screen, self.keys_info_shoot_text, (10, 140))
+        # s.show_basic_text(self.screen, self.keys_info_term_text, (10, 160))
+        # s.show_basic_text(self.screen, self.keys_info_weapons_text, (10, 180))
 
         # Curseur
         mouse_pos = pg.mouse.get_pos()
         self.screen.blit(self.cursor_img, self.cursor_img.get_rect(center=mouse_pos))
+
+        self.hud.draw(self.screen)
 
     def run(self):
         clock = pg.time.Clock()

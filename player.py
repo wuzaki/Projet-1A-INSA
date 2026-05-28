@@ -132,24 +132,12 @@ class Player(AnimateSprite):
 
     def draw(self, screen):
         # self.show_angle(screen)
-        self.show_health(screen)
-        self.show_ammo_count(screen)
-        self.show_weapon_mode(screen)
+        # self.show_health(screen)
+        # self.show_ammo_count(screen)
+        # self.show_weapon_mode(screen)
 
         if not self.weapon.can_shoot() and self.weapon.ammo_count > 0:
             self.show_reload_weapon_timer(screen)
-
-    def show_health(self, screen):
-        temp = s.get_text_surf(f"Health: {self.health}")
-        s.show_basic_text(screen, temp, (10, 40))
-
-    def show_ammo_count(self, screen):
-        temp = s.get_text_surf(f"Ammo: {self.weapon.ammo_count}/{self.weapon.stock_ammo}")
-        s.show_basic_text(screen, temp, (10, 60))
-
-    def show_weapon_mode(self, screen):
-        temp = s.get_text_surf(f"Mode: {self.weapon.mode}")
-        s.show_basic_text(screen, temp, (10, 80))
 
     def show_angle(self, screen):
         # ==== Angle Visualizer ====
