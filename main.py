@@ -36,11 +36,6 @@ class Game:
         self.player.draw(self.screen)
         [enemy.draw(self.screen) for enemy in self.world_graph.get_enemies()]
 
-        # s.show_basic_text(self.screen, self.keys_info_move_text, (10, 120))
-        # s.show_basic_text(self.screen, self.keys_info_shoot_text, (10, 140))
-        # s.show_basic_text(self.screen, self.keys_info_term_text, (10, 160))
-        # s.show_basic_text(self.screen, self.keys_info_weapons_text, (10, 180))
-
         # Curseur
         mouse_pos = pg.mouse.get_pos()
         self.screen.blit(self.cursor_img, self.cursor_img.get_rect(center=mouse_pos))
