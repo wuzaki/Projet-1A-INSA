@@ -7,7 +7,7 @@ class Shadow(pg.sprite.Sprite):
         super().__init__()
         self.game = game
         self.target = target
-        self._layer = 11  # juste sous le joueur (layer 12)
+        self._layer = 9  # juste sous le joueur (layer 12)
 
         self.image = pg.Surface((width, height), pg.SRCALPHA)
         pg.draw.ellipse(self.image, (0, 0, 0, 120), self.image.get_rect())
