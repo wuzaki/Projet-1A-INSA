@@ -181,11 +181,27 @@ class Enemy(AnimateSprite):
                 if test_rect.colliderect(wall):
                     return False
         return True
+    
+    def separate_from_others(self):
+        SEPARATION_RADIUS = 20  # pixels
+        SEPARATION_FORCE = 1.5
+
+        for other in self.game.world_graph.get_enemies():
+            if other is self:
+                continue
+
+            delta = self.xy - other.xy
+            distance = delta.length()
+
+            if 0 < distance < SEPARATION_RADIUS:
+                push = delta.normalize() * SEPARATION_FORCE * (1 - distance / SEPARATION_RADIUS)
+                self.xy += push
 
     def update(self):
         self.angle = s.get_angle(self.rect.center, self.game.player.rect.center)
         self.run_logic()
         self.shadow.sync_rects()
+        self.separate_from_others()
         self.rect.midbottom = self.xy
         self.feet.midbottom = self.rect.midbottom
 

@@ -53,9 +53,9 @@ class Game:
                     if event.key == pg.K_ESCAPE:
                         return False
                 elif event.type == pg.MOUSEBUTTONDOWN:
-                    if event.button == 1:  # clic gauche
-                        self.player.weapon.shoot()
-                    elif event.button == 3:  # clic droit
+                    # if event.button == 1:  # clic gauche
+                    #     self.player.weapon.shoot()
+                    if event.button == 3:  # clic droit
                         self.player.weapon.reload_ammo()
                 
                 # Switch d'armes

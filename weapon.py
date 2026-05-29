@@ -2,6 +2,7 @@ import settings as s
 import pygame as pg
 import time as t
 import math
+import random as rd
 
 """
 Ce fichier contient la classe Weapon pour la gestion des armes et des projectiles.
@@ -49,10 +50,17 @@ class Weapon:
                 hitbox = enemy.rect.inflate(20, 20)
                 if self.owner.rect.colliderect(hitbox):
                     enemy.lose_health(s.WEAPONS_DATA.get(self.mode, {"damage": 50})["damage"])
-        
+
         elif self.mode in ["single", "enemy_single"]:
-            projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 25})["damage"])
+            # 0.12 = environ 7 degre
+            ecart = 0.3
+            spread = rd.uniform(-ecart, ecart) if self.mode == "enemy_single" else 0
+            projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle + spread, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 25})["damage"])
             self.game.world_graph.get_group().add(projectile)
+        
+        # elif self.mode in ["single", "enemy_single"]:
+        #     projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 25})["damage"])
+        #     self.game.world_graph.get_group().add(projectile)
 
         elif self.mode in ["shotgun", "enemy_shotgun"]:
             for i in range(self.pellets):
@@ -68,6 +76,11 @@ class Weapon:
                 self.ammo_count -= self.pellets
             else:
                 self.ammo_count -= 1
+
+    def update(self):
+        mouse = pg.mouse.get_pressed()
+        if mouse[0]:
+            self.shoot()
 
 
 # ==== Projectiles =====
