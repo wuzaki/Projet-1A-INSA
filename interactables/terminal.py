@@ -36,5 +36,5 @@ class Terminal(Interactable):
 
         keys = pg.key.get_pressed()
         if self.access:
-            if self.rect.inflate(40, 40).colliderect(self.game.player.feet) and keys[pg.K_a]:
+            if self.rect.inflate(40, 40).colliderect(self.game.player.feet) and keys[pg.K_e]:
                 TerminalUI(self.game, self.term_data).run()

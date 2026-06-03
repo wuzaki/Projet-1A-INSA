@@ -19,6 +19,8 @@ class Game:
         pg.mouse.set_visible(False)
         self.cursor_img = pg.image.load("assets/cursor.png").convert_alpha()
         self.cursor_img = pg.transform.scale(self.cursor_img, (42, 42))
+        cursor = pg.Cursor(pg.SYSTEM_CURSOR_CROSSHAIR)
+        pg.mouse.set_cursor(cursor)
 
         # Classes
         self.player = Player(self, 0, 0)

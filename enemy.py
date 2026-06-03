@@ -15,13 +15,14 @@ Ce fichier contient la classe Enemy pour la gestion des ennemis.
 class Enemy(AnimateSprite):
     PATH_RECALC_INTERVAL = 10 # frames entre deux recalculs
     PATH_GOAL_THRESHOLD = 1 # cellules de tolérance avant de recalculer
+    # ==== Constantes de classe à ajouter ====
+    FORMATION_RADIUS = 40  # distance entre ennemis en formation
 
     def __init__(self, game, x, y):
         super().__init__("assets/player.png")
         self.game = game
         self.xy = pg.math.Vector2(x, y)
         # self.image = self.load_image("assets/player.png")
-        self.image = self.images["down"][0]
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
         self.angle = 0
@@ -54,6 +55,109 @@ class Enemy(AnimateSprite):
         img = pg.image.load(path).convert_alpha().subsurface((0, 0, 32, 32))
         return img
     
+    # Dans enemy.py - remplace/ajoute ces méthodes
+
+    def get_formation_target(self):
+        """
+        Retourne la position cible selon le rôle de l'ennemi :
+        - Si un autre ennemi est déjà proche du joueur (leader), on se positionne à côté de lui.
+        - Sinon, on va vers le joueur directement.
+        """
+        enemies = self.game.world_graph.get_enemies()
+        player_pos = self.game.player.xy
+
+        # Cherche un "leader" : ennemi autre que soi qui est proche du joueur
+        leader = None
+        for other in enemies:
+            if other is self:
+                continue
+            if (other.xy - player_pos).length() <= s.ENEMY_MOVE_MIN_DIST + 5:
+                leader = other
+                break
+
+        if leader is None:
+            # Pas de leader → on est ou on devient le leader, on va vers le joueur
+            return player_pos
+
+        # On se positionne en formation autour du leader
+        # Calcule un slot autour du leader (cercle de FORMATION_RADIUS)
+        slot_index = self._get_slot_index(leader, enemies)
+        angle = (2 * math.pi / max(len(enemies) - 1, 1)) * slot_index
+        offset = pg.math.Vector2(math.cos(angle), math.sin(angle)) * self.FORMATION_RADIUS
+
+        return leader.xy + offset
+
+    def _get_slot_index(self, leader, enemies):
+        """Attribue un index de slot stable basé sur l'ordre dans la liste."""
+        followers = [e for e in enemies if e is not leader]
+        try:
+            return followers.index(self)
+        except ValueError:
+            return 0
+
+    def move(self):
+        """Version modifiée qui utilise get_formation_target."""
+        self.refresh_path()
+
+        if not self.path:
+            return
+
+        target_cell = self.path[0]
+        cell_world = s.grid_to_world(target_cell)
+        target_pos = pg.math.Vector2(
+            cell_world[0] + s.TILE_SIZE // 2,
+            cell_world[1] + s.TILE_SIZE // 2
+        )
+
+        direction = target_pos - self.xy
+        distance = direction.length()
+
+        if distance < 4:
+            self.xy = target_pos
+            self.path.pop(0)
+            return
+
+        angle = math.atan2(direction.y, direction.x)
+
+        if angle >= -math.pi / 4 and angle < math.pi / 4:
+            self.switch_animation("right")
+        elif angle >= math.pi / 4 and angle < 3 * math.pi / 4:
+            self.switch_animation("down")
+        elif angle >= 3 * math.pi / 4 or angle < -3 * math.pi / 4:
+            self.switch_animation("left")
+        else:
+            self.switch_animation("up")
+
+        move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
+        self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
+
+    def refresh_path(self):
+        self.path_timer += 1
+
+        if self.path_timer >= self.PATH_RECALC_INTERVAL:
+            start = s.world_to_grid(self.feet.center)
+
+            # ← Nouveau : on pathfind vers la formation, pas toujours vers le joueur
+            formation_target = self.get_formation_target()
+            goal = s.world_to_grid(formation_target)
+
+            direction = self.game.player.xy - self.xy
+            blocked = set()
+            if direction.length() <= s.ENEMY_MOVE_MIN_DIST:
+                for other in self.game.world_graph.get_enemies():
+                    if other is self:
+                        continue
+                    cell = s.world_to_grid(other.feet.center)
+                    for dx in range(-1, 2):
+                        for dy in range(-1, 2):
+                            blocked.add((cell[0] + dx, cell[1] + dy))
+
+            blocked.discard(start)
+            blocked.discard(goal)
+
+            self.path = self.game.pathfinding.find_path(start, goal) # , dynamic_obstacles=blocked)
+            self.path_timer = 0
+        
     # def goal_changed(self, goal):
     #     """Retourne True si le goal a suffisamment bougé pour recalculer."""
     #     if self.last_goal is None:
@@ -79,18 +183,33 @@ class Enemy(AnimateSprite):
     #     self.last_goal = goal
     #     self.path_timer = 0
 
-    def refresh_path(self):
+    def old_refresh_path(self):
         self.path_timer += 1
 
         if self.path_timer >= self.PATH_RECALC_INTERVAL:
             start = s.world_to_grid(self.feet.center)
-            goal = s.world_to_grid(self.game.player.feet.center)
+            goal  = s.world_to_grid(self.game.player.feet.center)
 
-            self.path = self.game.pathfinding.find_path(start, goal)
+            direction = self.game.player.xy - self.xy
+            blocked = set()
+            if direction.length() <= s.ENEMY_MOVE_MIN_DIST + 20:
+                # Cases bloquées = position de chaque autre ennemi + 1 case autour
+                for other in self.game.world_graph.get_enemies():
+                    if other is self:
+                        continue
+                    cell = s.world_to_grid(other.feet.center)
+                    for dx in range(-1, 2):
+                        for dy in range(-1, 2):
+                            blocked.add((cell[0] + dx, cell[1] + dy))
 
+            # Ne pas bloquer le start ni le goal
+            blocked.discard(start)
+            blocked.discard(goal)
+
+            self.path = self.game.pathfinding.find_path2(start, goal, dynamic_obstacles=blocked)
             self.path_timer = 0
 
-    def move(self):
+    def old_move(self):
         self.refresh_path()
         # start = s.world_to_grid(self.feet.center)
         # goal = s.world_to_grid(self.game.player.feet.center)
@@ -127,6 +246,7 @@ class Enemy(AnimateSprite):
             self.switch_animation("up")
 
         move_vec = pg.math.Vector2(math.cos(angle), math.sin(angle))
+
         self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
 
     def reload_ammo(self):
@@ -183,8 +303,10 @@ class Enemy(AnimateSprite):
         return True
     
     def separate_from_others(self):
-        SEPARATION_RADIUS = 20  # pixels
+        SEPARATION_RADIUS = 100
         SEPARATION_FORCE = 1.5
+
+        push_total = pg.math.Vector2(0, 0)
 
         for other in self.game.world_graph.get_enemies():
             if other is self:
@@ -193,17 +315,21 @@ class Enemy(AnimateSprite):
             delta = self.xy - other.xy
             distance = delta.length()
 
-            if 0 < distance < SEPARATION_RADIUS:
-                push = delta.normalize() * SEPARATION_FORCE * (1 - distance / SEPARATION_RADIUS)
-                self.xy += push
+            if 0 < distance < s.ENEMY_MOVE_MIN_DIST:
+                push_total += delta.normalize() * SEPARATION_FORCE * (1 - distance / SEPARATION_RADIUS)
+
+        self.xy += push_total
+
+    def sync_rects(self):
+        self.rect.midbottom = self.xy
+        self.feet.midbottom = self.rect.midbottom
 
     def update(self):
         self.angle = s.get_angle(self.rect.center, self.game.player.rect.center)
         self.run_logic()
         self.shadow.sync_rects()
-        self.separate_from_others()
-        self.rect.midbottom = self.xy
-        self.feet.midbottom = self.rect.midbottom
+        # self.separate_from_others()
+        self.sync_rects()
 
     def draw(self, screen):
         if self.health <= 0:

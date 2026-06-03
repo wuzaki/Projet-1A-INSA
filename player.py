@@ -30,7 +30,6 @@ class Player(AnimateSprite):
         # self.image = self.load_image("assets/player.png")
         # self.sprite_sheet = pg.image.load("assets/player.png").convert_alpha()
         # self.image = self.get_image(0, 0)
-        self.image = self.images["down"][0] # De AnimateSprite
         self.rect = self.image.get_rect()
         self.feet = pg.Rect(0, 0, self.rect.width * 0.5, 12)
 

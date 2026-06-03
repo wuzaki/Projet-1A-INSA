@@ -25,11 +25,22 @@ TILE_SIZE = 32
 # ==== Terminal Settings ====
 TERM_WIDTH, TERM_HEIGHT = 800, 600
 FONT_SIZE = 20
-TERM_FONT = pg.font.SysFont("Monospace", FONT_SIZE, "bold")
 LINE_HEIGHT = FONT_SIZE + 5
 BG_COLOR = (10, 10, 30)
 TEXT_COLOR = (0, 255, 0)
 HIGHLIGHT_COLOR = (0, 100, 0)
+
+# ==== Fonts Preload ====
+# Usage : FONTS["pixel"|"raleway"|"mono"][size] -> pg.font.Font
+FONTS: dict[str, dict[int, pg.font.Font]] = {
+    "pixel":   {s: pg.font.Font("assets/pixel_font.ttf", s) for s in range(8, 33)},
+    "raleway": {s: pg.font.SysFont("Raleway",   s, bold=True) for s in range(8, 33)},
+    "mono":    {s: pg.font.SysFont("Monospace", s, bold=True) for s in range(8, 33)},
+}
+
+# Aliases pour les tailles courantes
+PIXEL_FONT = FONTS["pixel"][FONT_SIZE]
+TERM_FONT  = FONTS["mono"][FONT_SIZE]
 
 # ==== Enemy Settings ====
 ENEMY_SPEED = 68 # pixels/seconde
@@ -40,26 +51,26 @@ ENEMY_DELAY_DETECTION = 1.0 # secondes
 
 ENEMY_COLOR_HEALTH_BAR = (204, 29, 29)
 
+PROJECTILE_SPEED = 500
+
 # ==== Weapon Constants ====
 WEAPONS_DATA = {
         "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 32},
         "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50},
         "knife": {"cooldown": 0.2, "damage": 50, "max_ammo": 9999},
-        "enemy_single": {"cooldown": 0.25, "damage": 5, "max_ammo": None},
+        "enemy_single": {"cooldown": 0.5, "damage": 5, "max_ammo": None},
         "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
 }
 
-def get_text_surf(text):
-    font = pg.font.SysFont("Raleway", 28)
+def get_text_surf(text, font):
     return font.render(text, True, (255, 255, 255))
+
+def show_fps(screen, clock):
+    fps_text = FONTS["raleway"][28].render(f"FPS: {round(clock.get_fps(), 2)}", True, (255, 255, 255))
+    screen.blit(fps_text, (10, 10))
 
 def show_basic_text(screen, surf, pos):
      screen.blit(surf, pos)
-
-def show_fps(screen, clock):
-    font = pg.font.SysFont("Raleway", 28)
-    fps_text = font.render(f"FPS: {round(clock.get_fps(), 2)}", True, (255, 255, 255))
-    screen.blit(fps_text, (10, 10))
 
 def get_angle(p1, p2):
     dx = p2[0] - p1[0]

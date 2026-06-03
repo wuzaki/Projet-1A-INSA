@@ -18,6 +18,7 @@ class AnimateSprite(pg.sprite.Sprite):
             "right": self.get_images(64),
             "up": self.get_images(96)
         }
+        self.image = self.images["down"][1] # De AnimateSprite
         self.animation_name = "down"
         self.speed_anim = 850
 

@@ -89,17 +89,21 @@ class Projectile(pg.sprite.Sprite):
         super().__init__()
         self.game = game
         self.owner = owner
-        self._layer = 11  # plus petit que le joueur
+        self._layer = 10  # plus petit que le joueur
         self.damage = damage
 
         self.xy = pg.math.Vector2(pos)
         self.angle = angle
-        self.speed = 500
+        self.speed = s.PROJECTILE_SPEED
 
-        self.image = pg.Surface((8, 4), pg.SRCALPHA)
+        self.image = pg.Surface((8, 4), pg.SRCALPHA) # self.load_img("assets/bullet.png")
         pg.draw.rect(self.image, (255, 255, 0), (0, 0, 8, 4))
         self.image = pg.transform.rotate(self.image, -math.degrees(angle))
         self.rect = self.image.get_rect(center=self.xy)
+
+    def load_img(self, path):
+        img = pg.image.load(path).convert_alpha()
+        return pg.transform.scale(img, (14, 6))
 
     def kill(self):
         super().kill()
