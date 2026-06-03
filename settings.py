@@ -67,9 +67,7 @@ def get_text_surf(text, font):
 
 def show_fps(screen, clock):
     fps_text = FONTS["raleway"][28].render(f"FPS: {round(clock.get_fps(), 2)}", True, (255, 255, 255))
-    temp_rect = fps_text.get_rect()
-    temp_rect.topright = (WIDTH-10, 10)
-    screen.blit(fps_text, temp_rect)
+    screen.blit(fps_text, (10, 10))
 
 def show_basic_text(screen, surf, pos):
      screen.blit(surf, pos)
