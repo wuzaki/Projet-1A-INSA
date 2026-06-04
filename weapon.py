@@ -53,7 +53,7 @@ class Weapon:
 
         elif self.mode in ["single", "enemy_single"]:
             # 0.12 = environ 7 degre
-            ecart = 0.3
+            ecart = 0 # 0.3
             spread = rd.uniform(-ecart, ecart) if self.mode == "enemy_single" else 0
             projectile = Projectile(self.game, self.owner, self.owner.rect.center, self.owner.angle + spread, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 25})["damage"])
             self.game.world_graph.get_group().add(projectile)

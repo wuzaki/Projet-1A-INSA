@@ -29,6 +29,11 @@ class Game:
 
         self.hud = PlayerHUD(self)
 
+    def new_game(self):
+        self.player = Player(self, 0, 0)
+        self.world_graph = WorldGraph(self)
+        self.pathfinding = PathFinding(self.world_graph.get_tile_map())
+
     def process(self):
         self.screen.fill((0, 0, 0))
         self.world_graph.process()

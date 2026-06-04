@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="102">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="81">
  <tileset firstgid="1" source="../beta/WumXon Infiltration.tsx"/>
  <tileset firstgid="20001" source="../beta/tileset_51.tsx"/>
  <layer id="1" name="floor" width="100" height="100">
@@ -407,9 +407,9 @@
   <object id="74" name="1" type="enemy" x="1534" y="3150">
    <point/>
   </object>
-  <object id="75" name="beta" type="portal" x="1440" y="3154" width="128" height="46">
+  <object id="75" name="beta" type="portal" x="1440" y="3168" width="128" height="32">
    <properties>
-    <property name="access" value="false"/>
+    <property name="access" value="true"/>
    </properties>
   </object>
   <object id="77" name="_beta" type="spawn" x="1479.33" y="3084">
@@ -417,43 +417,7 @@
   </object>
   <object id="80" name="shotgun" type="weapon" x="2848" y="288" width="32" height="32">
    <properties>
-    <property name="init_ammo" value="0"/>
-   </properties>
-  </object>
-  <object id="81" name="term_01" type="terminal" x="96" y="2944" width="32" height="32">
-   <properties>
-    <property name="access" value="true"/>
-   </properties>
-  </object>
-  <object id="83" type="collision" x="1440" y="3168" width="128" height="32"/>
-  <object id="95" name="ammo" type="ammo" x="2816" y="224" width="32" height="32">
-   <properties>
-    <property name="count" value="210"/>
-   </properties>
-  </object>
-  <object id="96" name="health" type="health" x="2208" y="1088" width="32" height="32">
-   <properties>
-    <property name="amount" value="35"/>
-   </properties>
-  </object>
-  <object id="97" name="ammo" type="ammo" x="1758" y="1170" width="32" height="32">
-   <properties>
-    <property name="count" value="40"/>
-   </properties>
-  </object>
-  <object id="98" name="ammo" type="ammo" x="2016" y="1152" width="32" height="32">
-   <properties>
-    <property name="count" value="40"/>
-   </properties>
-  </object>
-  <object id="100" name="ammo" type="ammo" x="56" y="2687" width="32" height="32">
-   <properties>
-    <property name="count" value="40"/>
-   </properties>
-  </object>
-  <object id="101" name="health" type="health" x="1507" y="3075" width="32" height="32">
-   <properties>
-    <property name="amount" value="35"/>
+    <property name="init_ammo" value="1000"/>
    </properties>
   </object>
  </objectgroup>
