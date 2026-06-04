@@ -30,7 +30,7 @@
     },
     "activate_portal": {
         "text": "Portail activé.",
-        "portal_name": "world1",
+        "portal_name": "beta",
         "options": [
             {"label": "Retour au menu principal", "target": "root"}
         ]
