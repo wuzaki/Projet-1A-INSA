@@ -417,7 +417,7 @@
   </object>
   <object id="80" name="shotgun" type="weapon" x="2848" y="288" width="32" height="32">
    <properties>
-    <property name="init_ammo" value="0"/>
+    <property name="init_ammo" value="50"/>
    </properties>
   </object>
   <object id="81" name="term_01" type="terminal" x="96" y="2944" width="32" height="32">
@@ -463,7 +463,7 @@
   </object>
   <object id="103" name="single" type="weapon" x="2912" y="320" width="32" height="32">
    <properties>
-    <property name="init_ammo" value="1000"/>
+    <property name="init_ammo" value="32"/>
    </properties>
   </object>
  </objectgroup>
