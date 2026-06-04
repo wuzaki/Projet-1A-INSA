@@ -97,7 +97,13 @@ class PlayerHUD:
     def show_ammo_count(self, screen):
         ammo_count = self.game.player.weapon.ammo_count
         stock_ammo = self.game.player.weapon.stock_ammo
-        temp = s.get_text_surf(f"Ammo: {ammo_count}/{stock_ammo}", s.FONTS["raleway"][28])
+
+        if self.game.player.weapon.name == "knife":
+            text = "inf/inf"
+        else:
+            text = f"Ammo: {ammo_count}/{stock_ammo}"
+
+        temp = s.get_text_surf(text, s.FONTS["raleway"][28])
         s.show_basic_text(screen, temp, (10, 60))
 
     def show_weapon_mode(self, screen):
