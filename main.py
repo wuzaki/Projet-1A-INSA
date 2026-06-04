@@ -38,6 +38,10 @@ class Game:
         self.screen.fill((0, 0, 0))
         self.world_graph.process()
 
+        # Truc rapide pour Gam'INSA
+        if self.world_graph.current_map == "beta" and len(self.world_graph.get_enemies()) <= 0:
+            self.new_game()
+
     def draw(self):
         self.world_graph.draw(self.screen)
         self.player.draw(self.screen)

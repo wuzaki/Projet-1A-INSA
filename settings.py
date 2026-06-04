@@ -54,12 +54,21 @@ ENEMY_COLOR_HEALTH_BAR = (204, 29, 29)
 PROJECTILE_SPEED = 500
 
 # ==== Weapon Constants ====
+# WEAPONS_DATA = {
+#         "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 32},
+#         "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50},
+#         "knife": {"cooldown": 0.2, "damage": 50, "max_ammo": 9999},
+#         "enemy_single": {"cooldown": 0.5, "damage": 5, "max_ammo": None},
+#         "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
+# }
+
+# ==== Configurations pour Game INSA ====
 WEAPONS_DATA = {
         "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 32},
         "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50},
         "knife": {"cooldown": 0.2, "damage": 50, "max_ammo": 9999},
-        "enemy_single": {"cooldown": 0.5, "damage": 5, "max_ammo": None},
-        "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
+        "enemy_single": {"cooldown": 0.5, "damage": 0.5, "max_ammo": None},
+        "enemy_shotgun": {"cooldown": 0.5, "damage": 0.5, "max_ammo": None},
 }
 
 def get_text_surf(text, font):
