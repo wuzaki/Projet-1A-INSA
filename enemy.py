@@ -2,10 +2,12 @@ import settings as s
 import pygame as pg
 import math
 import time as t
+import random as rd
 
 from weapon import Weapon
 from utils.animation import AnimateSprite
 from utils.shadow import Shadow
+from interactables import Ammo, Health, WeaponBox
 
 """
 Ce fichier contient la classe Enemy pour la gestion des ennemis.
@@ -51,22 +53,20 @@ class Enemy(AnimateSprite):
             self.game.world_graph.get_enemies().remove(self)
             self.kill()
 
+            # Ajouter un item à la place
+            items = [Health(self.game, self.rect.centerx, self.rect.centery, 32, 32, amount=15), Ammo(self.game, self.rect.centerx, self.rect.centery, 32, 32, count=32)]
+            item = rd.choice(items)
+            self.game.world_graph.get_group().add(item.shadow)
+            self.game.world_graph.get_group().add(item)
+
     def load_image(self, path):
         img = pg.image.load(path).convert_alpha().subsurface((0, 0, 32, 32))
         return img
-    
-    # Dans enemy.py - remplace/ajoute ces méthodes
 
     def get_formation_target(self):
-        """
-        Retourne la position cible selon le rôle de l'ennemi :
-        - Si un autre ennemi est déjà proche du joueur (leader), on se positionne à côté de lui.
-        - Sinon, on va vers le joueur directement.
-        """
         enemies = self.game.world_graph.get_enemies()
         player_pos = self.game.player.xy
 
-        # Cherche un "leader" : ennemi autre que soi qui est proche du joueur
         leader = None
         for other in enemies:
             if other is self:
@@ -76,19 +76,17 @@ class Enemy(AnimateSprite):
                 break
 
         if leader is None:
-            # Pas de leader → on est ou on devient le leader, on va vers le joueur
             return player_pos
 
         # On se positionne en formation autour du leader
         # Calcule un slot autour du leader (cercle de FORMATION_RADIUS)
-        slot_index = self._get_slot_index(leader, enemies)
+        slot_index = self.get_slot_index(leader, enemies)
         angle = (2 * math.pi / max(len(enemies) - 1, 1)) * slot_index
         offset = pg.math.Vector2(math.cos(angle), math.sin(angle)) * self.FORMATION_RADIUS
 
         return leader.xy + offset
 
-    def _get_slot_index(self, leader, enemies):
-        """Attribue un index de slot stable basé sur l'ordre dans la liste."""
+    def get_slot_index(self, leader, enemies):
         followers = [e for e in enemies if e is not leader]
         try:
             return followers.index(self)
@@ -96,7 +94,6 @@ class Enemy(AnimateSprite):
             return 0
 
     def move(self):
-        """Version modifiée qui utilise get_formation_target."""
         self.refresh_path()
 
         if not self.path:
@@ -250,7 +247,7 @@ class Enemy(AnimateSprite):
         self.xy += move_vec * s.ENEMY_SPEED * self.game.dt
 
     def reload_ammo(self):
-        if t.time() - self.weapon.last_shot_time >= 3:  # délai de rechargement
+        if t.time() - self.weapon.last_shot_time >= self.weapon.reload_time: # 3 délai de rechargement
             self.weapon.ammo_count = 10
 
     def can_move(self):

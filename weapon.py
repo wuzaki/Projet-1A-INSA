@@ -19,6 +19,8 @@ class Weapon:
         self.ammo_count = ammo_count  # pour les armes à munitions limitées
         self.stock_ammo = 0 # s.WEAPONS_DATA.get(mode, {"max_ammo": 10})["max_ammo"]  # pour les armes à munitions limitées
         self.max_ammo = s.WEAPONS_DATA.get(mode, {"max_ammo": 10})["max_ammo"]
+        self.reload_last_time = 0
+        self.reload_time = s.WEAPONS_DATA.get(mode, {"reload_time": 30})["reload_time"]
 
         # === ShotGun Specific ===
         self.pellets = 5

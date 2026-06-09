@@ -140,7 +140,7 @@ class Player(AnimateSprite):
         end_screen = pg.mouse.get_pos()
 
         return start_screen, end_screen
-
+    
     def update(self):
         self.move()
         self.sync_rects()
@@ -148,14 +148,24 @@ class Player(AnimateSprite):
         self.weapon.update()
         # self.switch_animation("down")
 
+        if (self.weapon.ammo_count <= 0 and self.weapon.stock_ammo > 0 and t.time() - self.weapon.last_shot_time > self.weapon.reload_time):
+            self.weapon.reload_ammo()
+
     def draw(self, screen):
         # self.show_angle(screen)
         # self.show_health(screen)
         # self.show_ammo_count(screen)
         # self.show_weapon_mode(screen)
 
-        if not self.weapon.can_shoot() and self.weapon.ammo_count > 0:
-            self.show_reload_weapon_timer(screen)
+        if self.weapon.ammo_count > 0:
+            if not self.weapon.can_shoot():
+                self.show_reload_weapon_timer(screen, s.PLAYER_COLOR_RELOAD_BAR,
+                                            self.weapon.last_shot_time, self.weapon.cooldown)
+        else:
+            if (t.time() - self.weapon.last_shot_time < self.weapon.reload_time
+                    and self.weapon.stock_ammo > 0):
+                self.show_reload_weapon_timer(screen, "green",
+                                            self.weapon.last_shot_time, self.weapon.reload_time)
 
     def show_angle(self, screen):
         # ==== Angle Visualizer ====
@@ -173,7 +183,7 @@ class Player(AnimateSprite):
 
         pg.draw.line(screen, (220, 220, 220, 10), start_screen, end_screen, 2)
 
-    def show_reload_weapon_timer(self, screen):
+    def show_reload_weapon_timer(self, screen, color, last_time, time):
         zoom = self.game.world_graph.get_group()._map_layer.zoom
         bar_width = 13 * zoom
         bar_height = 3 * zoom
@@ -183,5 +193,5 @@ class Player(AnimateSprite):
         rect.center = cam.translate_point((self.rect.centerx, self.rect.centery - 20))
 
         pg.draw.rect(screen, (0, 0, 0), rect)
-        pg.draw.rect(screen, s.PLAYER_COLOR_RELOAD_BAR, (rect.x, rect.y, rect.width * (((t.time() - self.weapon.last_shot_time) % self.weapon.cooldown) / self.weapon.cooldown), rect.height))
+        pg.draw.rect(screen, color, (rect.x, rect.y, rect.width * (((t.time() - last_time) % time) / time), rect.height))
         # pg.draw.rect(screen, (255, 255, 255), rect, 1)

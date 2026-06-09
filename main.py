@@ -63,17 +63,23 @@ class Game:
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         return False
+                    if event.key == pg.K_r:
+                        self.player.weapon.reload_ammo()
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     # if event.button == 1:  # clic gauche
                     #     self.player.weapon.shoot()
+                    # if event.button == 3:  # clic droit
+                    #     self.player.weapon.reload_ammo()
                     if event.button == 3:  # clic droit
-                        self.player.weapon.reload_ammo()
+                        idx = self.player.weapon_list.index(self.player.weapon) + 1 
+                        idx %= len(self.player.weapon_list)
+                        self.player.weapon = self.player.weapon_list[idx]
                 
                 # Switch d'armes
-                elif event.type == pg.MOUSEWHEEL:
-                    idx = self.player.weapon_list.index(self.player.weapon)
-                    idx = (idx + event.y) % len(self.player.weapon_list)
-                    self.player.weapon = self.player.weapon_list[idx]
+                # elif event.type == pg.MOUSEWHEEL:
+                #     idx = self.player.weapon_list.index(self.player.weapon)
+                #     idx = (idx + event.y) % len(self.player.weapon_list)
+                #     self.player.weapon = self.player.weapon_list[idx]
                     
             # ==== Update ====
             self.dt = min(clock.tick(s.FPS) / 1000, 0.05)

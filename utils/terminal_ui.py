@@ -42,7 +42,7 @@ TERMINAL_DATA = {
     }
 }
 
-
+# ==== TerminalUI ====
 class TerminalUI:
     # Taille fixe interne du terminal — indépendante de la fenêtre hôte
     TERM_W = 1000

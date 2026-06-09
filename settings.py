@@ -64,11 +64,11 @@ PROJECTILE_SPEED = 500
 
 # ==== Configurations pour Game INSA ====
 WEAPONS_DATA = {
-        "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 32},
-        "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50},
-        "knife": {"cooldown": 0.2, "damage": 50, "max_ammo": 9999},
-        "enemy_single": {"cooldown": 0.5, "damage": 0.5, "max_ammo": None},
-        "enemy_shotgun": {"cooldown": 0.5, "damage": 0.5, "max_ammo": None},
+        "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 32, "reload_time": 1.5},
+        "shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": 50, "reload_time" : 3},
+        "knife": {"cooldown": 0.2, "damage": 50, "max_ammo": 9999, "reload_time": 0},
+        "enemy_single": {"cooldown": 0.5, "damage": 3.5, "max_ammo": None, "reload_time": 3},
+        "enemy_shotgun": {"cooldown": 0.5, "damage": 3.5, "max_ammo": None, "reload_time": 6},
 }
 
 def get_text_surf(text, font):

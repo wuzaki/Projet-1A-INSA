@@ -28,11 +28,11 @@ class WorldGraph:
     def __init__(self, game):
         self.game = game
         self.player = game.player
-        self.current_map = "intro_beta"
+        self.current_map = "map_test"
         self.maps = dict()
         self.tile_maps = dict() # Matrice de 0 et 1 pour l'algorithme A*
 
-        # self.load_map("map_test", zoom=2)
+        self.load_map("map_test", zoom=2)
         self.load_map("intro_beta", zoom=2)
         self.load_map("beta", zoom=2)
         self.spawn_player("player")
