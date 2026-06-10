@@ -21,7 +21,7 @@ class Enemy(AnimateSprite):
     FORMATION_RADIUS = 40  # distance entre ennemis en formation
 
     def __init__(self, game, x, y):
-        super().__init__("assets/player.png")
+        super().__init__("assets/enemy.png") # "assets/player.png")
         self.game = game
         self.xy = pg.math.Vector2(x, y)
         # self.image = self.load_image("assets/player.png")

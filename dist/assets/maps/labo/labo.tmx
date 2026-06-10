@@ -421,7 +421,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="objects">
-  <object id="1" name="player" x="1518.67" y="201.333">
+  <object id="1" name="player" x="1519.34" y="154">
    <point/>
   </object>
   <object id="2" type="collision" x="0" y="0" width="3201.33" height="85.3333"/>
@@ -786,22 +786,22 @@
     <property name="amount" value="25"/>
    </properties>
   </object>
-  <object id="210" name="health" type="health" x="1591" y="546.5" width="32" height="32">
+  <object id="210" name="health" type="health" x="1570.33" y="549.833" width="32" height="32">
    <properties>
     <property name="amount" value="25"/>
    </properties>
   </object>
-  <object id="211" name="health" type="health" x="1626.5" y="550.5" width="32" height="32">
+  <object id="211" name="health" type="health" x="1611.17" y="549.833" width="32" height="32">
    <properties>
     <property name="amount" value="25"/>
    </properties>
   </object>
-  <object id="212" name="health" type="health" x="1656" y="553.5" width="32" height="32">
+  <object id="212" name="health" type="health" x="1654" y="550.833" width="32" height="32">
    <properties>
     <property name="amount" value="25"/>
    </properties>
   </object>
-  <object id="213" name="term_01" type="terminal" x="1504" y="672" width="32" height="32">
+  <object id="213" name="term_test_labo" type="terminal" x="1504" y="672" width="32" height="32">
    <properties>
     <property name="access" value="true"/>
    </properties>
