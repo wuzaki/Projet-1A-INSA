@@ -513,6 +513,10 @@
    'C:\\Users\\luxal\\Desktop\\Coding\\Python\\Projet 1A '
    '(INSA)\\utils\\shadow.py',
    'PYMODULE'),
+  ('utils.sounds',
+   'C:\\Users\\luxal\\Desktop\\Coding\\Python\\Projet 1A '
+   '(INSA)\\utils\\sounds.py',
+   'PYMODULE'),
   ('utils.terminal_ui',
    'C:\\Users\\luxal\\Desktop\\Coding\\Python\\Projet 1A '
    '(INSA)\\utils\\terminal_ui.py',
