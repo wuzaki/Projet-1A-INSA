@@ -42,7 +42,6 @@ TERMINAL_DATA = {
     }
 }
 
-
 class TerminalUI:
     # Taille fixe interne du terminal — indépendante de la fenêtre hôte
     TERM_W = 1000
@@ -163,7 +162,12 @@ class TerminalUI:
                 if isinstance(item, Portal) and item.name == self.data[node_id]["portal_name"]:
                     item.get_access()  # active le portail connecté à ce terminal
 
-        elif node_id == "shutdown":
+        if node_id == "end_level":
+            # print("WIN!")
+            # self.game.show_win()
+            return "end_level"
+
+        if node_id == "shutdown":
             # pg.time.set_timer(pg.USEREVENT, 2000)  # timer pour quitter après 2 secondes
             return False
 

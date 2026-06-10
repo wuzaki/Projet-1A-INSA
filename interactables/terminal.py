@@ -38,3 +38,4 @@ class Terminal(Interactable):
         if self.access:
             if self.rect.inflate(40, 40).colliderect(self.game.player.feet) and keys[pg.K_e]:
                 TerminalUI(self.game, self.term_data).run()
+                self.game.show_win() # option bidon et moche mais qui marche pour la présentation du 12/06

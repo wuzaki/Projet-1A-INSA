@@ -1,5 +1,6 @@
 import settings as s
 import pygame as pg
+import time as t
 
 from maps import WorldGraph
 from player import Player
@@ -35,6 +36,30 @@ class Game:
         self.player = Player(self, 0, 0)
         self.world_graph = WorldGraph(self)
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
+
+    def show_death(self):
+        pg.draw.rect(self.screen, "black", self.screen.get_rect())
+        temp_surf = s.get_text_surf("You died!", s.FONTS["pixel"][32])
+        temp_rect = temp_surf.get_rect()
+        temp_rect.center = self.screen.get_rect().center
+        self.screen.blit(temp_surf, temp_rect)
+        pg.display.flip()
+        t.sleep(3)
+        self.new_game()
+        self.sounds.music_test.stop()
+        self.sounds.play_map()
+
+    def show_win(self):
+        pg.draw.rect(self.screen, "black", self.screen.get_rect())
+        temp_surf = s.get_text_surf("You win! Good job!", s.FONTS["pixel"][32])
+        temp_rect = temp_surf.get_rect()
+        temp_rect.center = self.screen.get_rect().center
+        self.screen.blit(temp_surf, temp_rect)
+        pg.display.flip()
+        t.sleep(3)
+        self.new_game()
+        self.sounds.music_test.stop()
+        self.sounds.play_map()
 
     def process(self):
         self.screen.fill((0, 0, 0))
@@ -96,5 +121,6 @@ class Game:
 # ==== Main ====
 if __name__ == "__main__":
     pg.init()
-    Game(s.WIDTH, s.HEIGHT).run()
+    game = Game(s.WIDTH, s.HEIGHT)
+    game.run()
     pg.quit()

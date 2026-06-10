@@ -43,6 +43,7 @@ class Enemy(AnimateSprite):
         self.shadow = Shadow(self.game, self, width=20, height=6)
 
     def lose_health(self, amount):
+        self.game.sounds.play_enemy_hurt()
         self.health -= amount
         if self.health <= 0:
             # Shadow

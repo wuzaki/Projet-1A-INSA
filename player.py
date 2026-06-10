@@ -46,20 +46,10 @@ class Player(AnimateSprite):
         self.health -= amount
         if self.health <= 0:
             self.health = 0
-            self.show_death()
-            self.game.new_game()
+            self.game.show_death()
             # self.kill()
         elif self.health > 100:
             self.health = 100
-
-    def show_death(self):
-        pg.draw.rect(self.game.screen, "black", self.game.screen.get_rect())
-        temp_surf = s.get_text_surf("You died!", s.FONTS["pixel"][32])
-        temp_rect = temp_surf.get_rect()
-        temp_rect.center = self.game.screen.get_rect().center
-        self.game.screen.blit(temp_surf, temp_rect)
-        pg.display.flip()
-        t.sleep(3)
 
     def move(self):
         keys = pg.key.get_pressed()

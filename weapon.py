@@ -101,8 +101,8 @@ class Projectile(pg.sprite.Sprite):
         self.angle = angle
         self.speed = s.PROJECTILE_SPEED
 
-        self.image = pg.Surface((8, 4), pg.SRCALPHA) # self.load_img("assets/bullet.png")
-        pg.draw.rect(self.image, (255, 255, 0), (0, 0, 8, 4))
+        self.image = self.load_img("assets/bullet.png") # pg.Surface((8, 4), pg.SRCALPHA)
+        # pg.draw.rect(self.image, (255, 255, 0), (0, 0, 8, 4))
         self.image = pg.transform.rotate(self.image, -math.degrees(angle))
         self.rect = self.image.get_rect(center=self.xy)
 
@@ -137,7 +137,6 @@ class Projectile(pg.sprite.Sprite):
                     self.kill()
                     return
         else:
-            # Un ennemi tire → on touche le joueur
             hitbox = self.game.player.rect.copy()
             hitbox.size = (
                 hitbox.width // 1.5,
