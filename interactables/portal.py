@@ -18,6 +18,8 @@ class Portal(Interactable):
         self.access = True
 
     def update(self):
+        # Pas de self.shadow.sync_rects() de base car on veut pas d'ombre
+
         if self.access:
             world = self.game.world_graph
 

@@ -1,6 +1,6 @@
 import settings as s
 from .base import Interactable
-from terminal_ui import TerminalUI
+from utils.terminal_ui import TerminalUI
 import pygame as pg
 import json
 
@@ -17,6 +17,9 @@ class Terminal(Interactable):
         self.ui = None
         self.active = False
 
+        # ==== Add Shadow ====
+        self.shadow.__init__(self.game, self, 40, 3)
+
     def load_data(self):
         try:
             with open(f"assets/terminal_data/{self.name}.json", "r", encoding="utf-8") as f:
@@ -29,7 +32,9 @@ class Terminal(Interactable):
         self.access = True
 
     def update(self):
+        self.shadow.sync_rects()
+
         keys = pg.key.get_pressed()
         if self.access:
-            if self.rect.inflate(40, 40).colliderect(self.game.player.feet) and keys[pg.K_a]:
+            if self.rect.inflate(40, 40).colliderect(self.game.player.feet) and keys[pg.K_e]:
                 TerminalUI(self.game, self.term_data).run()

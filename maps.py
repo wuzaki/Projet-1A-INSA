@@ -5,7 +5,7 @@ import pyscroll
 from dataclasses import dataclass
 import math
 
-from interactables import Interactable, Portal, Terminal, Ammo, Key
+from interactables import Interactable, Portal, Terminal, Ammo, Key, Health, WeaponBox
 from enemy import Enemy
 
 """
@@ -28,11 +28,13 @@ class WorldGraph:
     def __init__(self, game):
         self.game = game
         self.player = game.player
-        self.current_map = "map_test"
+        self.current_map = "labo"
         self.maps = dict()
         self.tile_maps = dict() # Matrice de 0 et 1 pour l'algorithme A*
 
-        self.load_map("map_test", zoom=2)
+        # self.load_map("map_test", zoom=2)
+        # self.load_map("intro_beta", zoom=2)
+        self.load_map("labo", zoom=2)
         self.spawn_player("player")
 
     def spawn_player(self, name):
@@ -64,6 +66,12 @@ class WorldGraph:
                 interactables.append(Ammo(self.game, obj.x, obj.y, obj.width, obj.height, count))
             elif obj.type == "key":
                 interactables.append(Key(self.game, obj.x, obj.y, obj.width, obj.height, name, obj.name))
+            elif obj.type == "health":
+                amount = obj.properties.get("amount", 25)
+                interactables.append(Health(self.game, obj.x, obj.y, obj.width, obj.height, amount))
+            elif obj.type == "weapon":
+                init_ammo = obj.properties.get("init_ammo", 0)
+                interactables.append(WeaponBox(self.game, obj.x, obj.y, obj.width, obj.height, init_ammo, obj.name))
             elif obj.type == "enemy":
                 enemies.append(Enemy(self.game, obj.x, obj.y))
 
@@ -71,8 +79,15 @@ class WorldGraph:
 
         # Dessiner les différents calques
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=default_layer, sort=True)
+
+        [group.add(interactable.shadow) for interactable in interactables if hasattr(interactable, "shadow")] # Ajoute uniquement les interactables qui possede une ombre
         [group.add(interactable) for interactable in interactables]
+        [group.add(enemy.shadow) for enemy in enemies]
         [group.add(enemy) for enemy in enemies]
+
+        # Player doit être ajouté après les ennemis pour être au-dessus d'eux
+        group.add(self.player.shadow)
+        group.add(self.player.weapon_zone)
         group.add(self.player)
 
         self.maps[name] = Map(name, tmx_data, group, walls, interactables, enemies)
