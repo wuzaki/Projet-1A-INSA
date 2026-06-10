@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="201">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="202">
  <tileset firstgid="1" source="WumXon Infiltration.tsx"/>
  <tileset firstgid="20001" source="nature.tsx"/>
  <tileset firstgid="20181" source="tileset_51.tsx"/>
@@ -625,6 +625,9 @@
    <properties>
     <property name="amount" value="25"/>
    </properties>
+  </object>
+  <object id="201" name="player" x="1506.5" y="175.25">
+   <point/>
   </object>
  </objectgroup>
 </map>
