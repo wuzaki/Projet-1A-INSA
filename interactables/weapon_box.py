@@ -24,6 +24,7 @@ class WeaponBox(Interactable):
 
         if self.rect.colliderect(self.game.player.feet):
             if not any(w.mode == self.mode for w in self.game.player.weapon_list):
+                self.game.sounds.play_item()
                 new_weapon = Weapon(self.game, self.game.player, self.mode, ammo_count=self.init_ammo)
                 self.game.player.weapon_list.append(new_weapon)
                 self.game.player.weapon = new_weapon

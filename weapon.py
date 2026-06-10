@@ -30,6 +30,7 @@ class Weapon:
         return t.time() - self.last_shot_time >= self.cooldown and self.ammo_count > 0
     
     def reload_ammo(self):
+        self.game.sounds.play_reload()
         if self.ammo_count >= self.max_ammo:
             return  # chargeur déjà plein
 
@@ -54,6 +55,7 @@ class Weapon:
                     enemy.lose_health(s.WEAPONS_DATA.get(self.mode, {"damage": 50})["damage"])
 
         elif self.mode in ["single", "enemy_single"]:
+            self.game.sounds.single()
             # 0.12 = environ 7 degre
             ecart = 0 # 0.3
             spread = rd.uniform(-ecart, ecart) if self.mode == "enemy_single" else 0
@@ -65,6 +67,7 @@ class Weapon:
         #     self.game.world_graph.get_group().add(projectile)
 
         elif self.mode in ["shotgun", "enemy_shotgun"]:
+            self.game.sounds.shotgun()
             for i in range(self.pellets):
                 angle = self.owner.angle + (i - (self.pellets - 1) / 2) * self.spread_angle
                 projectile = Projectile(self.game, self.owner, self.owner.rect.center, angle, damage=s.WEAPONS_DATA.get(self.mode, {"damage": 10})["damage"])

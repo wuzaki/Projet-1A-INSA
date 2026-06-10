@@ -21,6 +21,7 @@ class Health(Interactable):
 
         if self.rect.colliderect(self.game.player.feet):
             # print("Health collected!")
+            self.game.sounds.play_health()
             self.game.player.lose_health(-self.amount)  # ou une autre quantité selon le type de munition
             self.kill()
             self.game.world_graph.get_group().remove(self)

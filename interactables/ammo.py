@@ -22,6 +22,7 @@ class Ammo(Interactable):
         if self.rect.colliderect(self.game.player.feet):
             # print("Ammo collected!")
             if self.game.player.weapon.mode != "knife":
+                self.game.sounds.play_item()
                 self.game.player.weapon.stock_ammo += self.count  # ou une autre quantité selon le type de munition
                 self.kill()
                 self.game.world_graph.get_group().remove(self)

@@ -80,6 +80,13 @@ class Player(AnimateSprite):
             direction.y += 1
             side = "down"
 
+        # Gestion des sons
+        if keys[pg.K_q] or keys[pg.K_d] or keys[pg.K_z] or keys[pg.K_s]:
+            if self.game.sounds.walk.get_num_channels() == 0: # joue seulement si pas déjà en cours
+                self.game.sounds.play_walk()
+        else:
+            self.game.sounds.walk.stop()
+
         # évite boost diagonale
         if direction.length_squared() > 0:
             self.switch_animation(side) # Animation du sprite

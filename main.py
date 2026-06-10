@@ -27,7 +27,7 @@ class Game:
         self.player = Player(self, 0, 0)
         self.world_graph = WorldGraph(self)
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
-        self.sound = Sounds(self)
+        self.sounds = Sounds(self)
 
         self.hud = PlayerHUD(self)
 
@@ -57,7 +57,7 @@ class Game:
 
     def run(self):
         clock = pg.time.Clock()
-        self.sound.play_map()
+        self.sounds.play_map()
         while True:
             # Event Loop
             for event in pg.event.get():
@@ -68,6 +68,7 @@ class Game:
                         return False
                     if event.key == pg.K_r:
                         self.player.weapon.reload_ammo()
+
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     # if event.button == 1:  # clic gauche
                     #     self.player.weapon.shoot()
