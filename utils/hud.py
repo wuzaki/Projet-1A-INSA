@@ -39,7 +39,7 @@ def draw_bar(screen, rect, value, max_val, color, bg_color, segments=20):
         else:
             col = bg_color
         pg.draw.rect(screen, col, (sx, y + 1, seg_w, h - 2))
-    pg.draw.rect(screen, "black", rect, 2)
+    pg.draw.rect(screen, "white", rect, 2)
 
 
 def draw_hud_background(screen, rect):
