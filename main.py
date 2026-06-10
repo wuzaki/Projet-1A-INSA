@@ -6,6 +6,7 @@ from player import Player
 from utils.weapon_zone import WeaponZone
 from pathfinding import PathFinding
 from utils.hud import PlayerHUD
+from utils.sounds import Sounds
 
 """
 Ce fichier contient la classe Game pour la gestion principale du jeu.
@@ -26,6 +27,7 @@ class Game:
         self.player = Player(self, 0, 0)
         self.world_graph = WorldGraph(self)
         self.pathfinding = PathFinding(self.world_graph.get_tile_map())
+        self.sound = Sounds(self)
 
         self.hud = PlayerHUD(self)
 
@@ -55,6 +57,7 @@ class Game:
 
     def run(self):
         clock = pg.time.Clock()
+        self.sound.play_map()
         while True:
             # Event Loop
             for event in pg.event.get():
