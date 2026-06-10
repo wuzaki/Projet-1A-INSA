@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="201">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="202">
  <tileset firstgid="1" source="WumXon Infiltration.tsx"/>
  <tileset firstgid="20001" source="nature.tsx"/>
  <tileset firstgid="20181" source="tileset_51.tsx"/>
@@ -563,11 +563,6 @@
   <object id="183" name="1" type="enemy" x="933.333" y="2927.27">
    <point/>
   </object>
-  <object id="185" name="single" type="weapon" x="1504" y="256" width="32" height="32">
-   <properties>
-    <property name="init_ammo" value="1000"/>
-   </properties>
-  </object>
   <object id="187" name="intro_beta" type="portal" x="1440" y="32" width="160" height="96">
    <properties>
     <property name="access" value="true"/>
@@ -630,6 +625,9 @@
    <properties>
     <property name="amount" value="25"/>
    </properties>
+  </object>
+  <object id="201" name="player" x="1506.5" y="175.25">
+   <point/>
   </object>
  </objectgroup>
 </map>
