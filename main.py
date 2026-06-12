@@ -24,6 +24,10 @@ class Game:
         cursor = pg.Cursor(pg.SYSTEM_CURSOR_CROSSHAIR)
         pg.mouse.set_cursor(cursor)
 
+        self.chrono = s.TIMER
+
+        self.start_time = t.time()
+
         # Classes
         self.player = Player(self, 0, 0)
         self.world_graph = WorldGraph(self)
@@ -45,6 +49,7 @@ class Game:
         self.screen.blit(temp_surf, temp_rect)
         pg.display.flip()
         t.sleep(3)
+        self.chrono = s.TIMER
         self.new_game()
         self.sounds.music_test.stop()
         self.sounds.play_map()
@@ -55,6 +60,7 @@ class Game:
         temp_rect = temp_surf.get_rect()
         temp_rect.center = self.screen.get_rect().center
         self.screen.blit(temp_surf, temp_rect)
+        self.chrono = s.TIMER
         pg.display.flip()
         t.sleep(3)
         self.new_game()
@@ -62,12 +68,20 @@ class Game:
         self.sounds.play_map()
 
     def process(self):
+        if self.chrono <= 0:
+            self.show_death()
+
         self.screen.fill((0, 0, 0))
         self.world_graph.process()
 
         # Truc rapide pour Gam'INSA
         if self.world_graph.current_map == "beta" and len(self.world_graph.get_enemies()) <= 0:
             self.new_game()
+
+        if t.time() - self.start_time > 1:
+            if self.chrono > 0:
+                self.chrono -= 1
+            self.start_time = t.time()
 
     def draw(self):
         self.world_graph.draw(self.screen)

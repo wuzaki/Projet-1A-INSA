@@ -62,6 +62,8 @@ PROJECTILE_SPEED = 500
 #         "enemy_shotgun": {"cooldown": 0.5, "damage": 10, "max_ammo": None},
 # }
 
+TIMER = 60
+
 # ==== Configurations pour Game INSA ====
 WEAPONS_DATA = {
         "single": {"cooldown": 0.1, "damage": 25, "max_ammo": 32, "reload_time": 1.5},

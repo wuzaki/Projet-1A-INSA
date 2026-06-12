@@ -152,6 +152,14 @@ class PlayerHUD:
         temp_rect.bottomright = (s.WIDTH - 10, cy + 55)
         s.show_basic_text(screen, a_surf, temp_rect)# (rx, cy - 36))
 
+    def show_chrono(self, screen):
+        # Haut droite : chrono global
+        text = f"{self.game.chrono // 60:02}:{self.game.chrono  % 60:02}"
+        temp_text = s.FONTS["pixel"][32].render(text, True, "white")
+        temp_rect = temp_text.get_rect()
+        temp_rect.midtop = (s.WIDTH//2, 15)
+        screen.blit(temp_text, temp_rect)
+
 
     def draw(self, screen):
         self.draw_hud_strip(screen)
@@ -162,3 +170,5 @@ class PlayerHUD:
         s.show_basic_text(screen, self.keys_info_reload_text, (10, 80))
         s.show_basic_text(screen, self.keys_info_term_text, (10, 100))
         s.show_basic_text(screen, self.keys_info_weapons_text, (10, 120))
+
+        self.show_chrono(screen)
